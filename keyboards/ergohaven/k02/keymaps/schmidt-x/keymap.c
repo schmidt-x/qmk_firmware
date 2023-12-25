@@ -38,10 +38,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 
 	[_SYSTEM] = LAYOUT(
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		KO_TOGG, NK_TOGG, CM_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KO_TOGG, NK_TOGG, CM_TOGG, DB_TOGG, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		                  QK_BOOT, QK_RBT,  EE_CLR,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
@@ -125,15 +125,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 		}
 		case KC_ESC:
-			if (!record->event.pressed) {
+			if (!record->event.pressed)
 				return true;
-			}
-			if (layer_state) {
-				layer_clear();
-			}
-			if (get_oneshot_mods()) {
+			
+			// We should clear mods before clearing the layer,
+			// since the KC_F13 key is gonna be sent on layer_state_set_user() invoked
+			if (get_oneshot_mods())
 				clear_oneshot_mods();
-			}
+			
+			if (get_mods())
+				clear_mods();
+			
+			if (layer_state)
+				layer_clear();
+			
 			return true;
 
 		default:
@@ -195,16 +200,16 @@ void render_layer_state(void) {
 
 	switch (get_highest_layer(layer_state)) {
 		case _NORMAL:
-			oled_write_P(PSTR("Norml"), false);
+			oled_write_P(PSTR("NORML"), false);
 			break;
 		case _INSERT:
-			oled_write_P(PSTR("Insrt"), false);
+			oled_write_P(PSTR("INSRT"), false);
 			break;
 		case _SYMBOL:
-			oled_write_P(PSTR("Symb\n"), false);
+			oled_write_P(PSTR("SYMB\n"), false);
 			break;
 		case _MOUSE:
-			oled_write_P(PSTR("Mouse"), false);
+			oled_write_P(PSTR("MOUSE"), false);
 			break;
 		case _FOUR:
 			oled_write_P(PSTR("4\n"), false);
@@ -240,13 +245,18 @@ void render_layer_state(void) {
 			oled_write_P(PSTR("14\n"), false);
 			break;
 		case _SYSTEM:
-			oled_write_P(PSTR("Systm"), false);
+			oled_write_P(PSTR("SYSTM"), false);
 			break;
 		default:
 			oled_write_ln_P(PSTR("Undef"), false);
 	}
 	
-	oled_write_P(PSTR("\n\n\n"), false);
+	oled_write_ln_P(PSTR("\n"), false);
+	
+	if (debug_config.enable)
+		oled_write_ln_P(PSTR("DEBUG"), false);
+	else
+		oled_write_ln_P(PSTR("\n"), false);
 	
 	if (keymap_config.nkro)
 		oled_write_ln_P(PSTR("NKRO\n"), false);
