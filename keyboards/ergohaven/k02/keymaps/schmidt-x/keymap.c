@@ -6,26 +6,26 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_NORMAL] = LAYOUT(
-		KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, OSL_SYS,                       OSL_SYS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS, \
+		KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS, \
 		KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_PSCR, \
-		KC_LSFT, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
-		KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
+		OSM_LSF, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  OSM_LSF, \
+		OSM_LCT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT, \
 		                  KC_LWIN, KC_LALT, INSERT,  KC_F13,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
 
 	[_INSERT] = LAYOUT(
 		_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
 		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
-		OSM_LSF, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, OSM_LSF, \
-		KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
-		                  KC_LWIN, KC_LALT, INS_RMO, NORMAL,  _______,     _______, SYMBOL,  MOUSE,   _______, _______ \
+		_______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, _______, \
+		_______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, _______, \
+		                  _______, _______, INS_RMO, NORMAL,  _______,     _______, _______, _______, _______, _______ \
 	),
- 
+
 	[_SYMBOL] = LAYOUT(
 		XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, XXXXXXX, \
-		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT, \
-		KC_LCTL, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, KC_LCTL, \
+		_______, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, _______, \
+		_______, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, _______, \
 		                  XXXXXXX, XXXXXXX, SMB_NRM, XXXXXXX, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
@@ -41,8 +41,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		KO_TOGG, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  \
-		                  QK_BOOT, QK_RBT,  EE_CLR,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, EE_CLR,  QK_RBT,  QK_BOOT \
+		KO_TOGG, NK_TOGG, CM_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		                  QK_BOOT, QK_RBT,  EE_CLR,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
 };
@@ -54,7 +54,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			static bool is_F_registered;
 			
 			if (record->event.pressed) {
-				if (get_mods()) { // if any modifier is used, act as normal F key
+				if (get_oneshot_mods() || get_mods()) { // if any modifier is used, act as normal F key
 					register_code(KC_F);
 					is_F_registered = true;
 				} else {
@@ -251,7 +251,7 @@ void render_layer_state(void) {
 	if (keymap_config.nkro)
 		oled_write_ln_P(PSTR("NKRO\n"), false);
 	else
-		oled_write_ln_P(PSTR("\n"), false);
+		oled_write_ln_P(PSTR("6KRO\n"), false);
 
 	led_t led_usb_state = host_keyboard_led_state();
 	oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);

@@ -33,9 +33,13 @@ enum layers {
 	_SYSTEM
 };
 
+
 #define SYMBOL  MO(_SYMBOL)
 #define OSM_LSF OSM(MOD_LSFT)
-#define OSL_SYS OSL(_SYSTEM)
+#define OSM_LCT OSM(MOD_LCTL)
+
+
+// --- Right Shifted Symbols ---
 
 #define CK_TILD RSFT(KC_GRV)
 #define CK_EXLM RSFT(KC_1)
@@ -56,12 +60,16 @@ enum layers {
 #define CK_QUES RSFT(KC_SLSH)
 
 
-// const uint16_t PROGMEM to_system_layer[] = {KC_ESC, KC_CAPS, COMBO_END};
+// --- Combos ---
 
-// combo_t key_combos[] = {
-	// COMBO(to_system_layer, OSL(_SYSTEM)),
-// };
+const uint16_t PROGMEM to_system_combo[] = {KC_ESC, KC_CAPS, COMBO_END};
 
+combo_t key_combos[] = {
+	COMBO(to_system_combo, OSL(_SYSTEM)),
+};
+
+
+// --- Key Overrides ---
 
 const key_override_t lsft_bspc_to_lctl_bspc = ko_make_with_layers_and_negmods(MOD_BIT(KC_LSFT), KC_BSPC, C(KC_BSPC), 1 << _NORMAL, ~MOD_BIT(KC_LSFT));
 const key_override_t lctl_bspc_to_lsft_bspc = ko_make_with_layers_and_negmods(MOD_BIT(KC_LCTL), KC_BSPC, S(KC_BSPC), 1 << _NORMAL, ~MOD_BIT(KC_LCTL));

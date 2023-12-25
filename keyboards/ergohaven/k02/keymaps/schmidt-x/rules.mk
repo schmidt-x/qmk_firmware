@@ -1,5 +1,6 @@
 LTO_ENABLE = yes           # Link Time Optimization
 KEY_OVERRIDE_ENABLE = yes
+COMBO_ENABLE = yes
 
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
