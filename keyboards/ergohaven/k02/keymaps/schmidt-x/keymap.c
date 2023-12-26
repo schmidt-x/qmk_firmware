@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		KO_TOGG, NK_TOGG, CM_TOGG, DB_TOGG, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		NK_TOGG, DB_TOGG, XXXXXXX, XXXXXXX, KO_TOGG, CM_TOGG,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		                  QK_BOOT, QK_RBT,  EE_CLR,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
@@ -84,7 +84,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (record->event.pressed) {
 				layer_state_set(1 << _INSERT);
 			}
-			
 			return false;
 		
 		case INS_RMO: // reversed MO
@@ -128,16 +127,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (!record->event.pressed)
 				return true;
 			
-			// We should clear mods before clearing the layer,
-			// since the KC_F13 key is gonna be sent on layer_state_set_user() invoked
-			if (get_oneshot_mods())
-				clear_oneshot_mods();
-			
-			if (get_mods())
-				clear_mods();
-			
 			if (layer_state)
 				layer_clear();
+			else if (get_oneshot_mods()) {
+				clear_oneshot_mods();
+			}
 			
 			return true;
 
@@ -149,6 +143,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // callback on layer change
 layer_state_t layer_state_set_user(layer_state_t state) {
+	uint8_t prev_mods = get_mods();
+	if (prev_mods)
+		clear_mods();
+	
+	if (get_oneshot_mods()) {
+		clear_oneshot_mods();
+	}
+	
 	switch (get_highest_layer(state)) {
 		case _NORMAL:
 			tap_code(KC_F13); // turn on Normal mode in AHK
@@ -166,6 +168,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 			tap_code(KC_F16); // turn on Mouse mode in AHK
 			break;
 	}
+	
+	if (prev_mods)
+		set_mods(prev_mods);
 	
 	return state;	
 }
