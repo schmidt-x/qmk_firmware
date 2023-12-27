@@ -47,6 +47,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+bool layer_is_default(void) {
+  return !layer_state;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
@@ -72,7 +75,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 		}
 		case NORMAL:
-			if (record->event.pressed && layer_state) {
+			if (record->event.pressed && !layer_is_default()) {
 				// No need to explicitly set _NORMAL since it's the default layer.
 				// But not present in layer_state (i.e., layer_state == 0b0..0_00000000 even though _NORMAL is on).
 				// If explicity set _NORMAL, layer_state == 0b0..0_00000001 (i.e, _default(_NORNAL) + _NORMAL)
@@ -81,24 +84,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 		
 		case INSERT:
-			if (record->event.pressed) {
+			if (record->event.pressed)
 				layer_state_set(1 << _INSERT);
-			}
+
 			return false;
 		
 		case INS_RMO: // reversed MO
 			if (record->event.pressed) {
 				layer_off(_INSERT);
 			} else {
-				if (!layer_state)
+				if (layer_is_default())
 					layer_on(_INSERT);
 			}
 			return false;
 			
 		case MOUSE:
-			if (record->event.pressed) { 
+			if (record->event.pressed)
 				layer_on(_MOUSE);
-			}
+      
 			return false;
 		
 		case SMB_NRM: {
@@ -127,11 +130,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (!record->event.pressed)
 				return true;
 			
-			if (layer_state)
+			if (!layer_is_default())
 				layer_clear();
-			else if (get_oneshot_mods()) {
+			
+			if (get_oneshot_mods())
 				clear_oneshot_mods();
-			}
 			
 			return true;
 
@@ -147,10 +150,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	if (prev_mods)
 		clear_mods();
 	
-	if (get_oneshot_mods()) {
+	uint8_t prev_oneshot_mods = get_oneshot_mods();
+	if (prev_oneshot_mods)
 		clear_oneshot_mods();
-	}
-	
+
 	switch (get_highest_layer(state)) {
 		case _NORMAL:
 			tap_code(KC_F13); // turn on Normal mode in AHK
@@ -171,6 +174,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	
 	if (prev_mods)
 		set_mods(prev_mods);
+	
+	if (prev_oneshot_mods)
+		set_oneshot_mods(prev_oneshot_mods);
 	
 	return state;	
 }
