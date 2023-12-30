@@ -6,43 +6,43 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_NORMAL] = LAYOUT(
-		KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS, \
-		KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_PSCR, \
-		OSM_LSF, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  OSM_LSF, \
-		OSM_LCT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT, \
-		                  KC_LWIN, KC_LALT, INSERT,  KC_F13,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
+		KC_LSFT, KC_A,    HRM_S,   HRM_D,   HRM_FAL, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
+		KC_F23,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_F24,  \
+		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   XXXXXXX, XXXXXXX \
 	),
 
 	[_INSERT] = LAYOUT(
-		_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
-		_______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, _______, \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,  \
+		OSM_LSF, KC_A,    HRM_S,   HRM_D,   HRM_F,   KC_G,                          KC_H,    HRM_J,   HRM_K,   HRM_L,   KC_SCLN, OSM_LSF, \
 		_______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, _______, \
-		                  _______, _______, INS_RMO, NORMAL,  _______,     _______, _______, _______, _______, _______ \
+		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, XXXXXXX, XXXXXXX \
 	),
 
 	[_SYMBOL] = LAYOUT(
-		XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX, \
-		XXXXXXX, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, XXXXXXX, \
-		_______, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, _______, \
-		_______, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, _______, \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KC_CAPS, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, KC_PSCR, \
+		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT, \
+		XXXXXXX, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, SMB_NRM, XXXXXXX, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
 	[_MOUSE] = LAYOUT(
-		_______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX,  KC_P1,   KC_P2,  KC_P3,   KC_P4,   \
-		XXXXXXX, XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, KC_P5,   KC_P6,   \
-		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_P7,   KC_P8,   \
-		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P9,   KC_P0,   \
-		                  KC_LWIN, XXXXXXX, INSERT,  NORMAL,  KC_BTN1,     KC_BTN2, KC_BTN3, XXXXXXX, _______, _______ \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX, \
+		_______, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
+		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_BTN1,     KC_BTN2, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
 	[_SYSTEM] = LAYOUT(
-		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		NK_TOGG, DB_TOGG, XXXXXXX, XXXXXXX, KO_TOGG, CM_TOGG,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		                  QK_BOOT, QK_RBT,  EE_CLR,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
+		EE_CLR,  KO_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		QK_RBT,  NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		QK_BOOT, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
 };
@@ -51,36 +51,244 @@ bool layer_is_default(void) {
   return !layer_state;
 }
 
+bool l_sft_matrix_is_on(void) {
+	return matrix_is_on(2, 0);
+}
+
+bool r_sft_matrix_is_on(void) {
+	return matrix_is_on(7, 5);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
-		case F_ALTAB: {
-			static bool is_F_registered;
+		case HRM_S: {
+			static bool release;
 			
 			if (record->event.pressed) {
-				if (get_oneshot_mods() || get_mods()) { // if any modifier is used, act as normal F key
-					register_code(KC_F);
-					is_F_registered = true;
+				if (l_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LGUI);
+					release = true;
 				} else {
-					register_code(KC_LALT);
-					tap_code(KC_TAB);
+					register_code(KC_S);
 				}
 			} else {
-				if (is_F_registered) {
-					unregister_code(KC_F);
-					is_F_registered = false;
+				if (release) {
+					unregister_mods(MOD_BIT_LGUI);
+					release = false;
 				} else {
-					unregister_code(KC_LALT);
+					unregister_code(KC_S);
 				}
+			}
+			
+			return false;
+		}
+		case HRM_D: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (l_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LALT);
+					release = true;
+				} else {
+					register_code(KC_D);
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LALT);
+					release = false;
+				} else {
+					unregister_code(KC_D);
+				}
+			}
+			
+			return false;
+		}
+		case HRM_F: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (l_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LCTRL);
+					release = true;
+				} else {
+					register_code(KC_F);
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LCTRL);
+					release = false;
+				} else {
+					unregister_code(KC_F);
+				}
+			}
+			
+			return false;
+		}
+		case HRM_FAL: {
+			static uint8_t state;
+			
+			if (record->event.pressed) {
+				if (!get_mods() && !get_oneshot_mods()) {
+					register_code(KC_LALT);
+					tap_code(KC_TAB);
+					state = 1;
+				} else if (l_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LCTRL);
+					state = 2;
+				} else {
+					register_code(KC_F);
+				}
+			} else {
+				switch (state) {
+					case 1:
+						unregister_code(KC_LALT);
+						break;
+					case 2:
+						unregister_mods(MOD_BIT_LCTRL);
+						break;
+					default:
+						unregister_code(KC_F);
+						break;
+				}
+				state = 0;
 			}
 			return false;
 		}
-		case NORMAL:
-			if (record->event.pressed && !layer_is_default()) {
-				// No need to explicitly set _NORMAL since it's the default layer.
-				// But not present in layer_state (i.e., layer_state == 0b0..0_00000000 even though _NORMAL is on).
-				// If explicity set _NORMAL, layer_state == 0b0..0_00000001 (i.e, _default(_NORNAL) + _NORMAL)
-				layer_clear();
+		case KC_LEFT: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LCTRL);
+					release = true;
+				} else {
+					return true;
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LCTRL);
+					release = false;
+				} else {
+					return true;
+				}
 			}
+			
+			return false;
+		}
+		case KC_DOWN: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LALT);
+					release = true;
+				} else {
+					return true;
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LALT);
+					release = false;
+				} else {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		case KC_RGHT: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LGUI);
+					release = true;
+				} else {
+					return true;
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LGUI);
+					release = false;
+				} else {
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		case HRM_J: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LCTRL);
+					release = true;
+				} else {
+					register_code(KC_J);
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LCTRL);
+					release = false;
+				} else {
+					unregister_code(KC_J);
+				}
+			}
+			
+			return false;
+		}
+		case HRM_K: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LALT);
+					release = true;
+				} else {
+					register_code(KC_K);
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LALT);
+					release = false;
+				} else {
+					unregister_code(KC_K);
+				}
+			}
+			
+			return false;
+		}
+		case HRM_L: {
+			static bool release;
+			
+			if (record->event.pressed) {
+				if (r_sft_matrix_is_on()) {
+					register_mods(MOD_BIT_LGUI);
+					release = true;
+				} else {
+					register_code(KC_L);
+				}
+			} else {
+				if (release) {
+					unregister_mods(MOD_BIT_LGUI);
+					release = false;
+				} else {
+					unregister_code(KC_L);
+				}
+			}
+
+			return false;
+		}
+		case NORMAL:
+			if (!record->event.pressed)
+				return false;
+			
+			if (layer_is_default())
+				tap_code(KC_F13);
+			else
+				layer_clear();
+			
 			return false;
 		
 		case INSERT:

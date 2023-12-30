@@ -2,12 +2,21 @@
 #define KEYMAP_H
 
 enum custom_keycodes {
-	F_ALTAB = SAFE_RANGE, // 0x7e40
-	NORMAL,
+	NORMAL = SAFE_RANGE, // 0x7e40,
 	INSERT,
 	INS_RMO,
 	MOUSE,
 	SMB_NRM,
+	HRM_S,
+	HRM_D,
+	HRM_F,
+	HRM_J,
+	HRM_K,
+	HRM_L,
+	HRM_FAL,
+	// HRM_LFT,
+	// HRM_DWN,
+	// HRM_RGH,
 };
 
 // QK_RBT   0x7c01
@@ -36,7 +45,6 @@ enum layers {
 
 #define SYMBOL  MO(_SYMBOL)
 #define OSM_LSF OSM(MOD_LSFT)
-#define OSM_LCT OSM(MOD_LCTL)
 
 
 // --- Right Shifted Symbols ---
@@ -62,7 +70,7 @@ enum layers {
 
 // --- Combos ---
 
-const uint16_t PROGMEM to_system_combo[] = {KC_ESC, KC_CAPS, COMBO_END};
+const uint16_t PROGMEM to_system_combo[] = {KC_F23, KC_F24, COMBO_END};
 
 combo_t key_combos[] = {
 	COMBO(to_system_combo, OSL(_SYSTEM)),
