@@ -14,9 +14,6 @@ enum custom_keycodes {
 	HRM_K,
 	HRM_L,
 	HRM_FAL,
-	// HRM_LFT,
-	// HRM_DWN,
-	// HRM_RGH,
 };
 
 // QK_RBT   0x7c01
@@ -26,9 +23,9 @@ enum custom_keycodes {
 enum layers {
 	_NORMAL,
 	_INSERT,
-	_SYMBOL,
+	_R_SYMB,
+	_L_SYMB,
 	_MOUSE,
-	_FOUR,
 	_FIVE,
 	_SIX,
 	_SEVEN,
@@ -43,7 +40,7 @@ enum layers {
 };
 
 
-#define SYMBOL  MO(_SYMBOL)
+#define SYMBOL  MO(_R_SYMB)
 #define OSM_LSF OSM(MOD_LSFT)
 
 

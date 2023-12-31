@@ -9,42 +9,49 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
 		KC_LSFT, KC_A,    HRM_S,   HRM_D,   HRM_FAL, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
-		KC_F23,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_F24,  \
-		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   XXXXXXX, XXXXXXX \
+		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
+		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
 
 	[_INSERT] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_TAB,  \
+		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
 		OSM_LSF, KC_A,    HRM_S,   HRM_D,   HRM_F,   KC_G,                          KC_H,    HRM_J,   HRM_K,   HRM_L,   KC_SCLN, OSM_LSF, \
-		_______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, _______, \
-		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, XXXXXXX, XXXXXXX \
+		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
+		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, _______, _______ \
 	),
 
-	[_SYMBOL] = LAYOUT(
+	[_R_SYMB] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_CAPS, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, KC_PSCR, \
-		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT, \
+		OSM_LSF, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, OSM_LSF, \
 		XXXXXXX, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, SMB_NRM, XXXXXXX, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
+	),
+
+	[_L_SYMB] = LAYOUT(
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, XXXXXXX, KC_F2,   XXXXXXX, XXXXXXX, KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
 	[_MOUSE] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX, \
-		_______, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_BTN1,     KC_BTN2, KC_BTN3, XXXXXXX, XXXXXXX, XXXXXXX \
+		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0,   \
+		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_BTN1,     KC_BTN2, KC_BTN3, XXXXXXX, _______, _______ \
 	),
 
 	[_SYSTEM] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		EE_CLR,  KO_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		QK_RBT,  NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		QK_BOOT, DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, XXXXXXX, KO_TOGG, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		XXXXXXX, EE_CLR,  NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		QK_BOOT, QK_RBT,  DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
-
 };
 
 bool layer_is_default(void) {
@@ -129,7 +136,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			
 			if (record->event.pressed) {
 				if (!get_mods() && !get_oneshot_mods()) {
-					register_code(KC_LALT);
+					register_code(KC_RALT);
 					tap_code(KC_TAB);
 					state = 1;
 				} else if (l_sft_matrix_is_on()) {
@@ -141,7 +148,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			} else {
 				switch (state) {
 					case 1:
-						unregister_code(KC_LALT);
+						unregister_code(KC_RALT);
 						break;
 					case 2:
 						unregister_mods(MOD_BIT_LCTRL);
@@ -280,17 +287,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 			return false;
 		}
-		case NORMAL:
-			if (!record->event.pressed)
-				return false;
+		case NORMAL: {
+			static bool symbol;
 			
-			if (layer_is_default())
-				tap_code(KC_F13);
-			else
-				layer_clear();
+			if (record->event.pressed) {
+				if (get_mods()) {
+					layer_on(_L_SYMB);
+					symbol = true;
+				} else {
+					if (layer_is_default())
+						tap_code(KC_F13);
+					else
+						layer_clear();
+				}
+			} else {
+				if (symbol) {
+					layer_off(_L_SYMB);
+					symbol = false;
+				}
+			}
 			
 			return false;
-		
+		}
 		case INSERT:
 			if (record->event.pressed)
 				layer_state_set(1 << _INSERT);
@@ -314,21 +332,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		
 		case SMB_NRM: {
 			static bool should;
-			static layer_state_t mask = (1 << _INSERT) | (1 << _SYMBOL);
+			static layer_state_t mask = (1 << _INSERT) | (1 << _R_SYMB);
 			
 			if (record->event.pressed) {
-				if (layer_state != mask) return false;
+				if (layer_state != mask)
+					return false;
 				
 				layer_clear();
 				should = true;
 			} else {
-				if (!should) return false;
+				if (!should)
+					return false;
 				
-				if (matrix_is_on(9, 1)) {
+				if (matrix_is_on(9, 1))
 					layer_state_set(mask);
-				} else {
+				else
 					layer_on(_INSERT);
-				}
 				
 				should = false;
 			}
@@ -371,7 +390,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 			tap_code(KC_F14); // turn on Insert mode in AHK
 			break;
 		
-		case _SYMBOL:
+		case _R_SYMB:
+		case _L_SYMB:
 			tap_code(KC_F15); // turn on Symbol mode in AHK
 			break;
 
@@ -424,14 +444,14 @@ void render_layer_state(void) {
 		case _INSERT:
 			oled_write_P(PSTR("INSRT"), false);
 			break;
-		case _SYMBOL:
-			oled_write_P(PSTR("SYMB\n"), false);
+		case _R_SYMB:
+			oled_write_P(PSTR("R_SYM"), false);
+			break;
+		case _L_SYMB:
+			oled_write_P(PSTR("L_SYM"), false);
 			break;
 		case _MOUSE:
 			oled_write_P(PSTR("MOUSE"), false);
-			break;
-		case _FOUR:
-			oled_write_P(PSTR("4\n"), false);
 			break;
 		case _FIVE:
 			oled_write_P(PSTR("5\n"), false);
