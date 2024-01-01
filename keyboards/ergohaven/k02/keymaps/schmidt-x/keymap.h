@@ -1,19 +1,32 @@
-#ifndef KEYMAP_H
-#define KEYMAP_H
+#pragma once
 
 enum custom_keycodes {
+	/*
+	* layer_clear() when pressed. Sends KC_F13 if layer is already default.
+	* MO(_L_SYMB) when pressed if LShift is on */
 	NORMAL = SAFE_RANGE, // 0x7e40,
+	
+	/*
+	* layer_move(_INSERT) when pressed */
 	INSERT,
+	
+	/* 
+	* Reversed MO(_INSERT) */
 	INS_RMO,
+	
+	/*
+	* layer_on(_MOUSE) when pressed (doesn't bring back) */
 	MOUSE,
+	
+	/*
+	* Hard to explain. Just ignore, you don't need it */
 	SMB_NRM,
-	HRM_S,
-	HRM_D,
-	HRM_F,
-	HRM_J,
-	HRM_K,
-	HRM_L,
-	HRM_FAL,
+	
+	/*
+	* Alt+Tab when pressed.
+	* LCtrl when pressed if matrix_is_on(0, 2).
+	* F when pressed if any mod is on */
+	HRM_FAT,
 };
 
 // QK_RBT   0x7c01
@@ -65,7 +78,7 @@ enum layers {
 #define CK_QUES RSFT(KC_SLSH)
 
 
-// --- Combos ---
+#ifdef COMBO_ENABLE
 
 const uint16_t PROGMEM to_system_combo[] = {KC_F23, KC_F24, COMBO_END};
 
@@ -73,23 +86,25 @@ combo_t key_combos[] = {
 	COMBO(to_system_combo, OSL(_SYSTEM)),
 };
 
+#endif
 
-// --- Key Overrides ---
 
-const key_override_t lsft_bspc_to_lctl_bspc = ko_make_with_layers_and_negmods(MOD_BIT(KC_LSFT), KC_BSPC, C(KC_BSPC), 1 << _NORMAL, ~MOD_BIT(KC_LSFT));
-const key_override_t lctl_bspc_to_lsft_bspc = ko_make_with_layers_and_negmods(MOD_BIT(KC_LCTL), KC_BSPC, S(KC_BSPC), 1 << _NORMAL, ~MOD_BIT(KC_LCTL));
-const key_override_t lsft_del_to_lctl_del   = ko_make_with_layers_and_negmods(MOD_BIT(KC_LSFT), KC_DEL,  C(KC_DEL),  1 << _NORMAL, ~MOD_BIT(KC_LSFT));
-const key_override_t lctl_del_to_lsft_del   = ko_make_with_layers_and_negmods(MOD_BIT(KC_LCTL), KC_DEL,  S(KC_DEL),  1 << _NORMAL, ~MOD_BIT(KC_LCTL));
+#ifdef KEY_OVERRIDE_ENABLE
 
-const key_override_t lsft_left_to_lctl_left = ko_make_with_layers_and_negmods(MOD_BIT(KC_LSFT), KC_LEFT, C(KC_LEFT), 1 << _NORMAL, ~MOD_BIT(KC_LSFT));
-const key_override_t lctl_left_to_lsft_left = ko_make_with_layers_and_negmods(MOD_BIT(KC_LCTL), KC_LEFT, S(KC_LEFT), 1 << _NORMAL, ~MOD_BIT(KC_LCTL));
-const key_override_t lsft_rght_to_lctl_rght = ko_make_with_layers_and_negmods(MOD_BIT(KC_LSFT), KC_RGHT, C(KC_RGHT), 1 << _NORMAL, ~MOD_BIT(KC_LSFT));
-const key_override_t lctl_rght_to_lsft_rght = ko_make_with_layers_and_negmods(MOD_BIT(KC_LCTL), KC_RGHT, S(KC_RGHT), 1 << _NORMAL, ~MOD_BIT(KC_LCTL));
+const key_override_t lsft_bspc_to_lctl_bspc = ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_BSPC, C(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LSHIFT);
+const key_override_t lctl_bspc_to_lsft_bspc = ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_BSPC, S(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LCTRL);
+const key_override_t lsft_del_to_lctl_del   = ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_DEL,  C(KC_DEL),  1 << _NORMAL, ~MOD_BIT_LSHIFT);
+const key_override_t lctl_del_to_lsft_del   = ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_DEL,  S(KC_DEL),  1 << _NORMAL, ~MOD_BIT_LCTRL);
 
-const key_override_t lsft_msu_to_whu = ko_make_basic(MOD_BIT(KC_LSFT), KC_MS_U, KC_WH_U);
-const key_override_t lsft_msd_to_whd = ko_make_basic(MOD_BIT(KC_LSFT), KC_MS_D, KC_WH_D);
-const key_override_t lsft_msl_to_whl = ko_make_basic(MOD_BIT(KC_LSFT), KC_MS_L, KC_WH_L);
-const key_override_t lsft_msr_to_whr = ko_make_basic(MOD_BIT(KC_LSFT), KC_MS_R, KC_WH_R);
+const key_override_t lsft_left_to_lctl_left = ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_LEFT, C(KC_LEFT), 1 << _NORMAL, ~MOD_BIT_LSHIFT);
+const key_override_t lctl_left_to_lsft_left = ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_LEFT, S(KC_LEFT), 1 << _NORMAL, ~MOD_BIT_LCTRL);
+const key_override_t lsft_rght_to_lctl_rght = ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_RGHT, C(KC_RGHT), 1 << _NORMAL, ~MOD_BIT_LSHIFT);
+const key_override_t lctl_rght_to_lsft_rght = ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_RGHT, S(KC_RGHT), 1 << _NORMAL, ~MOD_BIT_LCTRL);
+
+const key_override_t lsft_msu_to_whu = ko_make_basic(MOD_BIT_LSHIFT, KC_MS_U, KC_WH_U);
+const key_override_t lsft_msd_to_whd = ko_make_basic(MOD_BIT_LSHIFT, KC_MS_D, KC_WH_D);
+const key_override_t lsft_msl_to_whl = ko_make_basic(MOD_BIT_LSHIFT, KC_MS_L, KC_WH_L);
+const key_override_t lsft_msr_to_whr = ko_make_basic(MOD_BIT_LSHIFT, KC_MS_R, KC_WH_R);
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]) {

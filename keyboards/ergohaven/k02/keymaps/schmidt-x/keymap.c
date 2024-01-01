@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "oled/ergohaven_dark.c"
+#include "helper.h"
 #include "keymap.h"
 
 
@@ -8,7 +8,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NORMAL] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
-		KC_LSFT, KC_A,    HRM_S,   HRM_D,   HRM_FAL, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
+		KC_LSFT, KC_A,    KC_S,    KC_D,    HRM_FAT, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
 		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
@@ -16,7 +16,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_INSERT] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
-		OSM_LSF, KC_A,    HRM_S,   HRM_D,   HRM_F,   KC_G,                          KC_H,    HRM_J,   HRM_K,   HRM_L,   KC_SCLN, OSM_LSF, \
+		OSM_LSF, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, OSM_LSF, \
 		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, _______, _______ \
 	),
@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_L_SYMB] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, KC_F2,   XXXXXXX, XXXXXXX, KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX, \
-		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
+		KC_LSFT, XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, XXXXXXX,                       XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX, KC_LSFT, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
@@ -54,84 +54,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 };
 
-bool layer_is_default(void) {
-  return !layer_state;
-}
-
-bool l_sft_matrix_is_on(void) {
-	return matrix_is_on(2, 0);
-}
-
-bool r_sft_matrix_is_on(void) {
-	return matrix_is_on(7, 5);
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
-		case HRM_S: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (l_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LGUI);
-					release = true;
-				} else {
-					register_code(KC_S);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LGUI);
-					release = false;
-				} else {
-					unregister_code(KC_S);
-				}
-			}
-			
-			return false;
+	
+#ifdef HRM_ENABLE
+		case KC_S: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LGUI);
 		}
-		case HRM_D: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (l_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LALT);
-					release = true;
-				} else {
-					register_code(KC_D);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LALT);
-					release = false;
-				} else {
-					unregister_code(KC_D);
-				}
-			}
-			
-			return false;
+		
+		case KC_D: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LALT);
 		}
-		case HRM_F: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (l_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LCTRL);
-					release = true;
-				} else {
-					register_code(KC_F);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LCTRL);
-					release = false;
-				} else {
-					unregister_code(KC_F);
-				}
-			}
-			
-			return false;
+		
+		case KC_F: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LCTRL);
 		}
-		case HRM_FAL: {
+		
+		case KC_L: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LGUI);
+		}
+		
+		case KC_K: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LALT);
+		}
+		
+		case KC_J: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LCTRL);
+		}
+		
+		case KC_LEFT: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LCTRL);
+		}
+		
+		case KC_DOWN: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LALT);
+		}
+		
+		case KC_RGHT: {
+			static bool is_mod;
+			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LGUI);
+		}
+#endif
+
+		case HRM_FAT: {
 			static uint8_t state;
 			
 			if (record->event.pressed) {
@@ -161,137 +135,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 		}
-		case KC_LEFT: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LCTRL);
-					release = true;
-				} else {
-					return true;
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LCTRL);
-					release = false;
-				} else {
-					return true;
-				}
-			}
-			
-			return false;
-		}
-		case KC_DOWN: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LALT);
-					release = true;
-				} else {
-					return true;
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LALT);
-					release = false;
-				} else {
-					return true;
-				}
-			}
-			
-			return false;
-		}
-		case KC_RGHT: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LGUI);
-					release = true;
-				} else {
-					return true;
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LGUI);
-					release = false;
-				} else {
-					return true;
-				}
-			}
-			
-			return false;
-		}
-		case HRM_J: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LCTRL);
-					release = true;
-				} else {
-					register_code(KC_J);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LCTRL);
-					release = false;
-				} else {
-					unregister_code(KC_J);
-				}
-			}
-			
-			return false;
-		}
-		case HRM_K: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LALT);
-					release = true;
-				} else {
-					register_code(KC_K);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LALT);
-					release = false;
-				} else {
-					unregister_code(KC_K);
-				}
-			}
-			
-			return false;
-		}
-		case HRM_L: {
-			static bool release;
-			
-			if (record->event.pressed) {
-				if (r_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LGUI);
-					release = true;
-				} else {
-					register_code(KC_L);
-				}
-			} else {
-				if (release) {
-					unregister_mods(MOD_BIT_LGUI);
-					release = false;
-				} else {
-					unregister_code(KC_L);
-				}
-			}
-
-			return false;
-		}
+		
 		case NORMAL: {
 			static bool symbol;
 			
 			if (record->event.pressed) {
-				if (get_mods()) {
+				if (get_mods() == MOD_BIT_LSHIFT) {
 					layer_on(_L_SYMB);
 					symbol = true;
 				} else {
@@ -309,13 +158,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			
 			return false;
 		}
+
 		case INSERT:
 			if (record->event.pressed)
 				layer_state_set(1 << _INSERT);
 
 			return false;
 		
-		case INS_RMO: // reversed MO
+		case INS_RMO:
 			if (record->event.pressed) {
 				layer_off(_INSERT);
 			} else {
@@ -353,6 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 		}
+
 		case KC_ESC:
 			if (!record->event.pressed)
 				return true;
