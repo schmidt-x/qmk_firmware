@@ -7,5 +7,6 @@ bool l_sft_matrix_is_on(void);
 bool r_sft_matrix_is_on(void);
 
 #ifdef HRM_ENABLE
-bool hrm(bool pressed, bool *is_mod, bool left, uint8_t mods);
+bool l_hrm(bool pressed, bool *is_mod, uint8_t mods);
+bool r_hrm(bool pressed, bool *is_mod, uint8_t mods);
 #endif

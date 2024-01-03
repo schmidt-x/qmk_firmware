@@ -13,18 +13,24 @@ bool r_sft_matrix_is_on(void) {
 }
 
 #ifdef HRM_ENABLE
-bool hrm(bool pressed, bool *is_mod, bool left, uint8_t mods) {
+
+static uint8_t left_mods;
+static uint8_t right_mods;
+
+bool l_hrm(bool pressed, bool *is_hrm, uint8_t mods) {
 	if (pressed) {
-		if (left ? l_sft_matrix_is_on() : r_sft_matrix_is_on()) {
+		if (left_mods || l_sft_matrix_is_on()) {
 			register_mods(mods);
-			*is_mod = true;
+			*is_hrm = true;
+			left_mods |= mods;
 		} else {
 			return true;
 		}
 	} else {
-		if (*is_mod) {
+		if (*is_hrm) {
 			unregister_mods(mods);
-			*is_mod = false;
+			*is_hrm = false;
+			left_mods &= ~mods;
 		} else {
 			return true;
 		}
@@ -32,4 +38,27 @@ bool hrm(bool pressed, bool *is_mod, bool left, uint8_t mods) {
 	
 	return false;
 }
+
+bool r_hrm(bool pressed, bool *is_hrm, uint8_t mods) {
+	if (pressed) {
+		if (right_mods || r_sft_matrix_is_on()) {
+			register_mods(mods);
+			*is_hrm = true;
+			right_mods |= mods;
+		} else {
+			return true;
+		}
+	} else {
+		if (*is_hrm) {
+			unregister_mods(mods);
+			*is_hrm = false;
+			right_mods &= ~mods;
+		} else {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 #endif

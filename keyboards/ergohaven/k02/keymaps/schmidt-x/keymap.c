@@ -21,18 +21,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, _______, _______ \
 	),
 
-	[_R_SYMB] = LAYOUT(
+	[_SYMBOL] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_CAPS, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, KC_PSCR, \
-		OSM_LSF, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, OSM_LSF, \
+		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT, \
 		XXXXXXX, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, XXXXXXX, \
-		                  XXXXXXX, XXXXXXX, SMB_NRM, XXXXXXX, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
+		                  XXXXXXX, XXXXXXX, SMB_NRM, U_SYMBL, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
-	[_L_SYMB] = LAYOUT(
+	[_U_SYMB] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, KC_F2,   XXXXXXX, XXXXXXX, KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX, \
-		KC_LSFT, XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, XXXXXXX,                       XXXXXXX, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX, KC_LSFT, \
+		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
@@ -60,101 +60,123 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	
 #ifdef HRM_ENABLE
 		case KC_S: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LGUI);
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
 		}
 		
 		case KC_D: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LALT);
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
 		}
 		
 		case KC_F: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, true, MOD_BIT_LCTRL);
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
 		}
 		
 		case KC_L: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LGUI);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
 		}
 		
 		case KC_K: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LALT);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
 		}
 		
 		case KC_J: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LCTRL);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
 		}
 		
 		case KC_LEFT: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LCTRL);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
 		}
 		
 		case KC_DOWN: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LALT);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
 		}
 		
 		case KC_RGHT: {
-			static bool is_mod;
-			return hrm(record->event.pressed, &is_mod, false, MOD_BIT_LGUI);
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
+		}
+
+		case KC_EQL: {
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
+		}
+
+		case CK_LPRN: {
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
+		}
+
+		case CK_RPRN: {
+			static bool is_hrm;
+			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
+		}
+		
+		case KC_6: {
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
+		}
+
+		case KC_5: {
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
+		}
+
+		case KC_4: {
+			static bool is_hrm;
+			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
 		}
 #endif
 
 		case HRM_FAT: {
-			static uint8_t state;
+			static bool is_alt_tab;
+#ifdef HRM_ENABLE
+			static bool is_hrm;
+#endif
 			
 			if (record->event.pressed) {
-				if (!get_mods() && !get_oneshot_mods()) {
-					register_code(KC_RALT);
+#ifdef HRM_ENABLE
+				if (!l_hrm(true, &is_hrm, MOD_BIT_LCTRL))
+					return false;
+#endif
+				if (!get_mods()) {
+					register_mods(MOD_BIT_RALT);
 					tap_code(KC_TAB);
-					state = 1;
-				} else if (l_sft_matrix_is_on()) {
-					register_mods(MOD_BIT_LCTRL);
-					state = 2;
+					is_alt_tab = true;
 				} else {
 					register_code(KC_F);
 				}
 			} else {
-				switch (state) {
-					case 1:
-						unregister_code(KC_RALT);
-						break;
-					case 2:
-						unregister_mods(MOD_BIT_LCTRL);
-						break;
-					default:
-						unregister_code(KC_F);
-						break;
+#ifdef HRM_ENABLE
+				if (!l_hrm(false, &is_hrm, MOD_BIT_LCTRL))
+					return false;
+#endif
+				if (is_alt_tab) {
+					unregister_code(KC_RALT);
+					is_alt_tab = false;
+				} else {
+					unregister_code(KC_F);
 				}
-				state = 0;
 			}
+
 			return false;
 		}
 		
 		case NORMAL: {
-			static bool symbol;
-			
-			if (record->event.pressed) {
-				if (get_mods() == MOD_BIT_LSHIFT) {
-					layer_on(_L_SYMB);
-					symbol = true;
-				} else {
-					if (layer_is_default())
-						tap_code(KC_F13);
-					else
-						layer_clear();
-				}
-			} else {
-				if (symbol) {
-					layer_off(_L_SYMB);
-					symbol = false;
-				}
-			}
+			if (!record->event.pressed)
+				return false;
+
+			if (layer_is_default())
+				tap_code(KC_F13);
+			else
+				layer_clear();
 			
 			return false;
 		}
@@ -182,7 +204,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		
 		case SMB_NRM: {
 			static bool should;
-			static layer_state_t mask = (1 << _INSERT) | (1 << _R_SYMB);
+			static layer_state_t mask = (1 << _INSERT) | (1 << _SYMBOL);
 			
 			if (record->event.pressed) {
 				if (layer_state != mask)
@@ -228,9 +250,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	if (prev_mods)
 		clear_mods();
 	
-	uint8_t prev_oneshot_mods = get_oneshot_mods();
-	if (prev_oneshot_mods)
-		clear_oneshot_mods();
+	clear_oneshot_mods();
 
 	switch (get_highest_layer(state)) {
 		case _NORMAL:
@@ -241,8 +261,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 			tap_code(KC_F14); // turn on Insert mode in AHK
 			break;
 		
-		case _R_SYMB:
-		case _L_SYMB:
+		case _SYMBOL:
 			tap_code(KC_F15); // turn on Symbol mode in AHK
 			break;
 
@@ -253,9 +272,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	
 	if (prev_mods)
 		set_mods(prev_mods);
-	
-	if (prev_oneshot_mods)
-		set_oneshot_mods(prev_oneshot_mods);
 	
 	return state;	
 }
@@ -295,11 +311,11 @@ void render_layer_state(void) {
 		case _INSERT:
 			oled_write_P(PSTR("INSRT"), false);
 			break;
-		case _R_SYMB:
-			oled_write_P(PSTR("R_SYM"), false);
+		case _SYMBOL:
+			oled_write_P(PSTR("SYMB\n"), false);
 			break;
-		case _L_SYMB:
-			oled_write_P(PSTR("L_SYM"), false);
+		case _U_SYMB:
+			oled_write_P(PSTR("SYMB+"), false);
 			break;
 		case _MOUSE:
 			oled_write_P(PSTR("MOUSE"), false);
