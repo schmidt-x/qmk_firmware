@@ -7,6 +7,7 @@ HRM_ENABLE = yes
 SRC += helper.c
 
 ifeq ($(strip $(HRM_ENABLE)), yes)
+	SRC += leader_hrm.c
 	OPT_DEFS += -DHRM_ENABLE
 endif
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "leader_hrm.h"
+
 enum custom_keycodes {
 	/*
 	* layer_clear() when pressed.
@@ -24,10 +26,8 @@ enum custom_keycodes {
 	
 	/*
 	* Alt+Tab when pressed.
-	* LCtrl when pressed if matrix_is_on(0, 2)
-	  or if any other hrm-mod on the same side is on.
 	* F when pressed if any mod is on */
-	HRM_FAT,
+	F_ALTAB,
 };
 
 // QK_RBT   0x7c01
@@ -78,6 +78,28 @@ enum layers {
 #define CK_RCBR RSFT(KC_RBRC)
 #define CK_PIPE RSFT(KC_BSLS)
 #define CK_QUES RSFT(KC_SLSH)
+
+
+#ifdef HRM_ENABLE
+
+const leader_hrm_t *leader_hrms = &(const leader_hrm_t) {
+	.l_mods = &(const hrm_t *[3]) {
+		&(const hrm_t){2, 4, MOD_BIT_LCTRL},
+		&(const hrm_t){2, 3, MOD_BIT_LALT},
+		&(const hrm_t){2, 2, MOD_BIT_LGUI}
+	},
+
+	.r_mods = &(const hrm_t *[3]) {
+		&(const hrm_t){7, 1, MOD_BIT_LCTRL},
+		&(const hrm_t){7, 2, MOD_BIT_LALT},
+		&(const hrm_t){7, 3, MOD_BIT_LGUI}
+	},
+	
+	.layers     = ~0,
+	.leader_mod = MOD_BIT_LSHIFT
+};
+
+#endif
 
 
 #ifdef COMBO_ENABLE

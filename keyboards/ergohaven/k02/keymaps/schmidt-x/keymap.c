@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
-#include "helper.h"
 #include "keymap.h"
+#include "helper.h"
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -8,7 +8,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NORMAL] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
-		KC_LSFT, KC_A,    KC_S,    KC_D,    HRM_FAT, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
+		KC_LSFT, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
 		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
 		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
@@ -56,96 +56,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) { // This will do most of the grunt work with the keycodes.
+
+// TODO:
+#ifdef HRM_ENABLE
+	if (!process_leader_hrm(keycode, record))
+		return false;
+#endif
 	
-#ifdef HRM_ENABLE
-		case KC_S: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
-		}
-		
-		case KC_D: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
-		}
-		
-		case KC_F: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
-		}
-		
-		case KC_L: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
-		}
-		
-		case KC_K: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
-		}
-		
-		case KC_J: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
-		}
-		
-		case KC_LEFT: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
-		}
-		
-		case KC_DOWN: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
-		}
-		
-		case KC_RGHT: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
-		}
+	switch (keycode) { // This will do most of the grunt work with the keycodes.
 
-		case KC_EQL: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
-		}
-
-		case CK_LPRN: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
-		}
-
-		case CK_RPRN: {
-			static bool is_hrm;
-			return l_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
-		}
-		
-		case KC_6: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LGUI);
-		}
-
-		case KC_5: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LALT);
-		}
-
-		case KC_4: {
-			static bool is_hrm;
-			return r_hrm(record->event.pressed, &is_hrm, MOD_BIT_LCTRL);
-		}
-#endif
-
-		case HRM_FAT: {
+		case F_ALTAB: {
 			static bool is_alt_tab;
-#ifdef HRM_ENABLE
-			static bool is_hrm;
-#endif
 			
 			if (record->event.pressed) {
-#ifdef HRM_ENABLE
-				if (!l_hrm(true, &is_hrm, MOD_BIT_LCTRL))
-					return false;
-#endif
 				if (!get_mods()) {
 					register_mods(MOD_BIT_RALT);
 					tap_code(KC_TAB);
@@ -154,10 +77,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					register_code(KC_F);
 				}
 			} else {
-#ifdef HRM_ENABLE
-				if (!l_hrm(false, &is_hrm, MOD_BIT_LCTRL))
-					return false;
-#endif
 				if (is_alt_tab) {
 					unregister_code(KC_RALT);
 					is_alt_tab = false;
