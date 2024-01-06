@@ -25,7 +25,7 @@ bool name_me(const keyrecord_t *const record, const uint8_t shift) {
 		if (hrm == NULL)
 			break;
 		
-		if (hrm->row != record->event.key.row || hrm->col != record->event.key.col)
+		if (hrm->col != record->event.key.col)
 			continue;
 		
 		if (record->event.pressed) {
@@ -47,6 +47,7 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 	if (leader_hrms == NULL)
 		return true;
 	
+	bool is_hrm_row;
 	uint8_t shift;
 	
 	// TODO:
@@ -55,12 +56,14 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 		if (leader_hrms->l_mods == NULL)
 			return true;
 		
+		is_hrm_row = leader_hrms->l_row == record->event.key.row;
 		shift = 0;
 	} else {
 		// Do the same for the right side
 		if (leader_hrms->r_mods == NULL)
 			return true;
 		
+		is_hrm_row = leader_hrms->r_row == record->event.key.row;
 		shift = 4;
 	}
 	
@@ -72,6 +75,9 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 		
 		return true;
 	}
+	
+	if (!is_hrm_row)
+		return true;
 	
 	// Check the layer
 	if ((leader_hrms->layers & (1 << read_source_layers_cache(record->event.key))) == 0)

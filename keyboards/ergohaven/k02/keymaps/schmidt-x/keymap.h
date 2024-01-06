@@ -83,20 +83,22 @@ enum layers {
 #ifdef HRM_ENABLE
 
 const leader_hrm_t *leader_hrms = &(const leader_hrm_t) {
+	.leader_mod = MOD_BIT_LSHIFT,
+	.layers     = ~0,
+	
+	.l_row  = 2,
 	.l_mods = &(const hrm_t *[3]) {
-		&(const hrm_t){2, 4, MOD_BIT_LCTRL},
-		&(const hrm_t){2, 3, MOD_BIT_LALT},
-		&(const hrm_t){2, 2, MOD_BIT_LGUI}
+		&(const hrm_t){4, MOD_BIT_LCTRL},
+		&(const hrm_t){3, MOD_BIT_LALT},
+		&(const hrm_t){2, MOD_BIT_LGUI}
 	},
 
+	.r_row  = 7,
 	.r_mods = &(const hrm_t *[3]) {
-		&(const hrm_t){7, 1, MOD_BIT_LCTRL},
-		&(const hrm_t){7, 2, MOD_BIT_LALT},
-		&(const hrm_t){7, 3, MOD_BIT_LGUI}
+		&(const hrm_t){1, MOD_BIT_LCTRL},
+		&(const hrm_t){2, MOD_BIT_LALT},
+		&(const hrm_t){3, MOD_BIT_LGUI}
 	},
-	
-	.layers     = ~0,
-	.leader_mod = MOD_BIT_LSHIFT
 };
 
 #endif
