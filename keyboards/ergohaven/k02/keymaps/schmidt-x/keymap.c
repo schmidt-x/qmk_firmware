@@ -196,6 +196,33 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 
+// Caps Word
+bool caps_word_press_user(uint16_t keycode) {
+	switch (keycode) {
+		case KC_A ... KC_Z:
+			add_weak_mods(MOD_BIT_LSHIFT);
+			return true;
+		
+		case KC_1 ... KC_0:
+		case KC_BSPC:
+		case KC_DEL:
+		case CK_UNDS: // right shifted
+			return true;
+		
+		default:
+			return false;
+	}
+}
+
+// TODO:
+// void caps_word_set_user(bool active) {
+	// if (active)
+		
+	// else
+		
+// }
+
+
 // void matrix_scan_user(void) { // The very important timer.
 	
 // }

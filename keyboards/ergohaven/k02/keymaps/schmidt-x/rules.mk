@@ -2,6 +2,7 @@ LTO_ENABLE = yes           # Link Time Optimization
 KEY_OVERRIDE_ENABLE = yes
 COMBO_ENABLE = yes
 HRM_ENABLE = yes
+CAPS_WORD_ENABLE = yes
 # CONSOLE_ENABLE = yes
 
 SRC += helper.c
