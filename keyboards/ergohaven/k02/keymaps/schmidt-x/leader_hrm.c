@@ -50,8 +50,11 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 	bool is_hrm_row;
 	uint8_t shift;
 	
-	// TODO:
-	if  (record->event.key.row < MATRIX_ROWS/2) {
+#ifndef SPLIT_KEYBOARD
+	if (record->event.key.col < MATRIX_COLS/2) {
+#else
+	if (record->event.key.row < MATRIX_ROWS/2) {
+#endif
 		// Check if there is any mod defined for the left side
 		if (leader_hrms->l_mods == NULL)
 			return true;
