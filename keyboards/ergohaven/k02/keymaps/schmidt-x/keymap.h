@@ -1,6 +1,8 @@
 #pragma once
 
-#include "leader_hrm.h"
+#ifdef LEADER_HRM_ENABLE
+#    include "leader_hrm.h"
+#endif
 
 enum custom_keycodes {
 	/*
@@ -80,7 +82,7 @@ enum layers {
 #define CK_QUES RSFT(KC_SLSH)
 
 
-#ifdef HRM_ENABLE
+#ifdef LEADER_HRM_ENABLE
 
 const leader_hrm_t *leader_hrms = &(const leader_hrm_t) {
 	.leader_mod = MOD_BIT_LSHIFT,
@@ -88,7 +90,7 @@ const leader_hrm_t *leader_hrms = &(const leader_hrm_t) {
 	
 	.l_row  = 2,
 	.l_mods = &(const hrm_t *[3]) {
-		&(const hrm_t){4, MOD_BIT_LCTRL},
+		&(const hrm_t){.col = 4, .mod = MOD_BIT_LCTRL},
 		&(const hrm_t){3, MOD_BIT_LALT},
 		&(const hrm_t){2, MOD_BIT_LGUI}
 	},

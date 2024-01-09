@@ -6,12 +6,15 @@ __attribute__((weak)) const leader_hrm_t *leader_hrms = NULL;
 static uint8_t hrm_mods;
 
 
-bool is_leader_mod(const uint16_t keycode) {
+bool is_leader_mod(const uint16_t keycode, const uint8_t count) {
+	// uncomment, if you ever need it
+	// if (IS_QK_MOD_TAP(keycode) && !count)
+		// return leader_hrms->leader_mod & (QK_MOD_TAP_GET_MODS(keycode) << (keycode & 0x10 ? 4 : 0));
 	
-	if (IS_QK_ONE_SHOT_MOD(keycode))
-		return ((QK_ONE_SHOT_MOD_GET_MODS(keycode)) << (keycode & 0x10 ? 4 : 0)) & leader_hrms->leader_mod;
+	if (IS_QK_ONE_SHOT_MOD(keycode) && !count)
+		return leader_hrms->leader_mod & ((QK_ONE_SHOT_MOD_GET_MODS(keycode)) << (keycode & 0x10 ? 4 : 0));
 	
-	return IS_MODIFIER_KEYCODE(keycode) && MOD_BIT(keycode) & leader_hrms->leader_mod;
+	return IS_MODIFIER_KEYCODE(keycode) && leader_hrms->leader_mod & MOD_BIT(keycode);
 }
 
 bool name_me(const keyrecord_t *const record, const uint8_t shift) {
@@ -70,7 +73,7 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 		shift = 4;
 	}
 	
-	if (is_leader_mod(keycode)) {
+	if (is_leader_mod(keycode, record->tap.count)) {
 		if (record->event.pressed)
 			hrm_mods |= 1 << (3 + shift);
 		else
