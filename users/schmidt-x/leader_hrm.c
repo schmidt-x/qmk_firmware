@@ -31,12 +31,20 @@ bool name_me(const keyrecord_t *const record, const uint8_t shift) {
 		if (hrm->col != record->event.key.col)
 			continue;
 		
+		const uint8_t mod_mask = 1 << (i + shift);
+		
 		if (record->event.pressed) {
 			register_mods(hrm->mod);
-			hrm_mods |= 1 << (i + shift);
+			hrm_mods |= mod_mask;
 		} else {
+			// There may be a situation where we're trying to unregister a mod that hasn't been registered before.
+			// If we press hrm keys without any mod being active, press Leader mod and then release the previuosly
+			// held hrm keys, we will get here, even though those hrm keys were registered as "normal" keys.
+			if (!(hrm_mods & mod_mask))
+				return true;
+			
 			unregister_mods(hrm->mod);
-			hrm_mods &= ~(1 << (i + shift));
+			hrm_mods &= ~mod_mask;
 		}
 		
 		return false;
