@@ -59,6 +59,7 @@ enum layers {
 #define SYMBOL  MO(_SYMBOL)
 #define U_SYMBL MO(_U_SYMB)
 #define OSM_LSF OSM(MOD_LSFT)
+#define OSM_LCT OSM(MOD_LCTL)
 
 
 // --- Right Shifted Symbols ---

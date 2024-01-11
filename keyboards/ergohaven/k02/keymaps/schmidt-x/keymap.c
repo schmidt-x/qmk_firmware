@@ -9,7 +9,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
 		KC_LSFT, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
-		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
+		KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
 		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
 
@@ -17,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
 		OSM_LSF, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, OSM_LSF, \
-		XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, XXXXXXX, \
+		OSM_LCT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT, \
 		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, _______, _______ \
 	),
 
@@ -25,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_CAPS, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, KC_PSCR, \
 		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT, \
-		XXXXXXX, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, XXXXXXX, \
+		OSM_LCT, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH,                       KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, OSM_LCT, \
 		                  XXXXXXX, XXXXXXX, SMB_NRM, U_SYMBL, _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX \
 	),
 
@@ -69,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			
 			if (record->event.pressed) {
 				if (!get_mods()) {
-					register_mods(MOD_BIT_RALT);
+					add_mods(MOD_BIT_RALT);
 					tap_code(KC_TAB);
 					is_alt_tab = true;
 				} else {
@@ -77,7 +77,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			} else {
 				if (is_alt_tab) {
-					unregister_code(KC_RALT);
+					unregister_mods(MOD_BIT_RALT);
 					is_alt_tab = false;
 				} else {
 					unregister_code(KC_F);
@@ -163,10 +163,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // callback on layer change
 layer_state_t layer_state_set_user(layer_state_t state) {
-	uint8_t prev_mods = get_mods();
-	if (prev_mods)
-		clear_mods();
-	
 	clear_oneshot_mods();
 
 	switch (get_highest_layer(state)) {
@@ -186,9 +182,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 			tap_code(KC_F16); // turn on Mouse mode in AHK
 			break;
 	}
-	
-	if (prev_mods)
-		set_mods(prev_mods);
 	
 	return state;	
 }
