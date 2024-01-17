@@ -69,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			
 			if (record->event.pressed) {
 				if (!get_mods()) {
-					add_mods(MOD_BIT_RALT);
+					add_mods(MOD_BIT_LALT);
 					tap_code(KC_TAB);
 					is_alt_tab = true;
 				} else {
@@ -77,7 +77,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			} else {
 				if (is_alt_tab) {
-					unregister_mods(MOD_BIT_RALT);
+					unregister_mods(MOD_BIT_LALT);
 					is_alt_tab = false;
 				} else {
 					unregister_code(KC_F);
@@ -145,14 +145,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 
 		case KC_ESC:
-			if (!record->event.pressed)
+			if (!record->event.pressed) {
 				return true;
+			}
 			
-			if (!layer_is_default())
+			if (!get_mods() && !layer_is_default()) {
 				layer_clear();
+			}
 			
 			clear_oneshot_mods();
-			
 			return true;
 
 		default:
