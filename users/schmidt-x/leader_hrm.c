@@ -8,11 +8,22 @@ static uint8_t hrm_mods;
 
 bool is_leader_mod(const uint16_t keycode, const uint8_t count) {
 	// uncomment, if you ever need it
-	// if (IS_QK_MOD_TAP(keycode) && !count)
-		// return leader_hrms->leader_mod & (QK_MOD_TAP_GET_MODS(keycode) << (keycode & 0x10 ? 4 : 0));
+	/*
+	if (IS_QK_MOD_TAP(keycode)) {
+		if (count)
+			return false;
+		
+		uint8_t mods = QK_MOD_TAP_GET_MODS(keycode);
+		return leader_hrms->leader_mod & (mods << (mods & 0x10 ? 4 : 0));
+	} */
 	
-	if (IS_QK_ONE_SHOT_MOD(keycode) && !count)
-		return leader_hrms->leader_mod & ((QK_ONE_SHOT_MOD_GET_MODS(keycode)) << (keycode & 0x10 ? 4 : 0));
+	if (IS_QK_ONE_SHOT_MOD(keycode)) {
+		if (count)
+			return false;
+		
+		uint8_t mods = QK_ONE_SHOT_MOD_GET_MODS(keycode);
+		return leader_hrms->leader_mod & (mods << (mods & 0x10 ? 4 : 0));
+	}
 	
 	return IS_MODIFIER_KEYCODE(keycode) && leader_hrms->leader_mod & MOD_BIT(keycode);
 }
