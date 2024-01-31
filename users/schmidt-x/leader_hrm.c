@@ -28,7 +28,7 @@ bool is_leader_mod(const uint16_t keycode, const uint8_t count) {
 	return IS_MODIFIER_KEYCODE(keycode) && leader_hrms->leader_mod & MOD_BIT(keycode);
 }
 
-bool name_me(const keyrecord_t *const record, const uint8_t shift) {
+bool process_mods(const keyrecord_t *const record, const uint8_t shift) {
 	const hrm_t *(*const mods)[3] = shift == 0
 		? leader_hrms->l_mods
 		: leader_hrms->r_mods;
@@ -109,8 +109,8 @@ bool process_leader_hrm(const uint16_t keycode, const keyrecord_t *const record)
 		return true;
 	
 	// Check if there is any active mod
-	if ((hrm_mods & (0b1111 << shift)) == 0)
+	if ((hrm_mods & (0xF << shift)) == 0)
 		return true;
 	
-	return name_me(record, shift);
+	return process_mods(record, shift);
 }

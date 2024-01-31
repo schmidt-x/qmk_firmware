@@ -9,7 +9,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
 		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
 		KC_LSFT, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
-		KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
+		KC_LCTL, Z_UNDO,  X_REDO,  KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
 		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
 
@@ -63,6 +63,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 	
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
+
+		case Z_UNDO:
+			if (record->event.pressed) {
+				if (!get_mods()) {
+					add_oneshot_mods(MOD_BIT_LCTRL);
+				}
+				register_code(KC_Z);
+			} else {
+				unregister_code(KC_Z);
+			}
+
+			return false;
+		
+		case X_REDO: {
+			static bool is_redo;
+
+			if (record->event.pressed) {
+				if (!get_mods()) {
+					add_mods(MOD_BIT_LCTRL);
+					register_code(KC_Y);
+					is_redo = true;
+				} else {
+					register_code(KC_X);
+				}
+			} else {
+				if (is_redo) {
+					del_mods(MOD_BIT_LCTRL);
+					unregister_code(KC_Y);
+					is_redo = false;
+				} else {
+					unregister_code(KC_X);
+				}
+			}
+
+			return false;
+		}
 
 		case F_ALTAB: {
 			static bool is_alt_tab;

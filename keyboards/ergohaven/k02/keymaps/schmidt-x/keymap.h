@@ -30,6 +30,16 @@ enum custom_keycodes {
 	* Alt+Tab when pressed.
 	* F when pressed if any mod is on */
 	F_ALTAB,
+	
+	/*
+	* Ctrl+z when pressed.
+	* Z when pressed if any mod is on */
+	Z_UNDO,
+	
+	/*
+	* Ctrl+y when pressed.
+	* X when pressed if any mod is on */
+	X_REDO,
 };
 
 // QK_RBT   0x7c01
