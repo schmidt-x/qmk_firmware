@@ -66,7 +66,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case Z_UNDO:
 			if (record->event.pressed) {
-				if (!get_mods()) {
+				if (no_mods()) {
 					add_oneshot_mods(MOD_BIT_LCTRL);
 				}
 				register_code(KC_Z);
@@ -80,7 +80,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			static bool is_redo;
 
 			if (record->event.pressed) {
-				if (!get_mods()) {
+				if (no_mods()) {
 					add_mods(MOD_BIT_LCTRL);
 					register_code(KC_Y);
 					is_redo = true;
@@ -104,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			static bool is_alt_tab;
 			
 			if (record->event.pressed) {
-				if (!get_mods()) {
+				if (no_mods()) {
 					add_mods(MOD_BIT_LALT);
 					tap_code(KC_TAB);
 					is_alt_tab = true;
@@ -145,8 +145,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (record->event.pressed) {
 				layer_off(_INSERT);
 			} else {
-				if (layer_is_default())
-					layer_on(_INSERT);
+				layer_on(_INSERT);
 			}
 			return false;
 			
@@ -185,7 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				return true;
 			}
 			
-			if (!get_mods() && !layer_is_default()) {
+			if (no_mods() && layer_is_not_default()) {
 				layer_clear();
 			}
 			
