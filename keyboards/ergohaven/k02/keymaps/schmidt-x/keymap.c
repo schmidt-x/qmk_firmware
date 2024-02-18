@@ -7,17 +7,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_NORMAL] = LAYOUT(
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
-		KC_LSFT, KC_A,    KC_S,    KC_D,    F_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
-		KC_LCTL, Z_UNDO,  X_REDO,  KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
+		KC_ESC,  KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,  \
+		KC_LSFT, KC_C,    KC_R,    S_SAVE,  T_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT, \
+		KC_LCTL, Q_UNDO,  J_REDO,  KC_V,    D_CLIPB, KC_K,                          KC_X,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL, \
 		                  XXXXXXX, XXXXXXX, INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE,   KC_F23,  KC_F24  \
 	),
 
-	[_INSERT] = LAYOUT(
+	[_INSERT] = LAYOUT( // Canary
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-		_______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    _______, \
-		OSM_LSF, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, OSM_LSF, \
-		OSM_LCT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                          KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT, \
+		_______, KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_Z,    KC_F,    KC_O,    KC_U,    KC_SCLN, _______, \
+		OSM_LSF, KC_C,    KC_R,    KC_S,    KC_T,    KC_G,                          KC_M,    KC_N,    KC_E,    KC_I,    KC_A,    OSM_LSF, \
+		OSM_LCT, KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,                          KC_X,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT, \
 		                  XXXXXXX, XXXXXXX, INS_RMO, _______, _______,     _______, _______, _______, _______, _______ \
 	),
 
@@ -58,65 +58,115 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef LEADER_HRM_ENABLE
-	if (!process_leader_hrm(keycode, record))
+	if (!process_leader_hrm(keycode, record)) {
 		return false;
+	}
 #endif
 	
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
 
-		case Z_UNDO:
+		case D_CLIPB: {
+			static bool is_clipboard;
+			
 			if (record->event.pressed) {
 				if (no_mods()) {
-					add_oneshot_mods(MOD_BIT_LCTRL);
+					add_mods(MOD_BIT_RGUI);
+					register_code(KC_V);
+					is_clipboard = true;
+				} else {
+					register_code(KC_D);
 				}
-				register_code(KC_Z);
 			} else {
-				unregister_code(KC_Z);
+				if (is_clipboard) {
+					del_mods(MOD_BIT_RGUI);
+					unregister_code(KC_V);
+					is_clipboard = false;
+				} else {
+					unregister_code(KC_D);
+				}
+			}
+			
+			return false;
+		}
+
+		case S_SAVE: {
+			if (record->event.pressed) {
+				if (no_mods()) {
+					add_oneshot_mods(MOD_BIT_RCTRL);
+				}
+				register_code(KC_S);
+			} else {
+				unregister_code(KC_S);
 			}
 
 			return false;
+		}
+
+		case Q_UNDO: {
+			static bool is_undo;
+
+			if (record->event.pressed) {
+				if (no_mods()) {
+					add_mods(MOD_BIT_RCTRL);
+					register_code(KC_Z);
+					is_undo = true;
+				} else {
+					register_code(KC_Q);
+				}
+			} else {
+				if (is_undo) {
+					del_mods(MOD_BIT_RCTRL);
+					unregister_code(KC_Z);
+					is_undo = false;
+				} else {
+					unregister_code(KC_Q);
+				}
+			}
+
+			return false;
+		}
 		
-		case X_REDO: {
+		case J_REDO: {
 			static bool is_redo;
 
 			if (record->event.pressed) {
 				if (no_mods()) {
-					add_mods(MOD_BIT_LCTRL);
+					add_mods(MOD_BIT_RCTRL);
 					register_code(KC_Y);
 					is_redo = true;
 				} else {
-					register_code(KC_X);
+					register_code(KC_J);
 				}
 			} else {
 				if (is_redo) {
-					del_mods(MOD_BIT_LCTRL);
+					del_mods(MOD_BIT_RCTRL);
 					unregister_code(KC_Y);
 					is_redo = false;
 				} else {
-					unregister_code(KC_X);
+					unregister_code(KC_J);
 				}
 			}
 
 			return false;
 		}
 
-		case F_ALTAB: {
+		case T_ALTAB: {
 			static bool is_alt_tab;
 			
 			if (record->event.pressed) {
 				if (no_mods()) {
-					add_mods(MOD_BIT_LALT);
+					add_mods(MOD_BIT_RALT);
 					tap_code(KC_TAB);
 					is_alt_tab = true;
 				} else {
-					register_code(KC_F);
+					register_code(KC_T);
 				}
 			} else {
 				if (is_alt_tab) {
-					unregister_mods(MOD_BIT_LALT);
+					unregister_mods(MOD_BIT_RALT);
 					is_alt_tab = false;
 				} else {
-					unregister_code(KC_F);
+					unregister_code(KC_T);
 				}
 			}
 
@@ -124,22 +174,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		
 		case NORMAL: {
-			if (!record->event.pressed)
+			if (!record->event.pressed) {
 				return false;
+			}
 
-			if (layer_is_default())
+			if (layer_is_default()) {
 				tap_code(KC_F13);
-			else
+			} else {
 				layer_clear();
+			}
 			
 			return false;
 		}
-
-		case INSERT:
-			if (record->event.pressed)
-				layer_state_set(1 << _INSERT);
-
-			return false;
 		
 		case INS_RMO:
 			if (record->event.pressed) {
@@ -150,9 +196,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 			
 		case MOUSE:
-			if (record->event.pressed)
+			if (record->event.pressed) {
 				layer_on(_MOUSE);
-      
+			}
 			return false;
 		
 		case SMB_NRM: {
@@ -293,54 +339,26 @@ void render_layer_state(void) {
 		case _MOUSE:
 			oled_write_P(PSTR("MOUSE"), false);
 			break;
-		case _FIVE:
-			oled_write_P(PSTR("5\n"), false);
-			break;
-		case _SIX:
-			oled_write_P(PSTR("6\n"), false);
-			break;
-		case _SEVEN:
-			oled_write_P(PSTR("7\n"), false);
-			break;
-		case _EIGHT:
-			oled_write_P(PSTR("8\n"), false);
-			break;
-		case _NINE:
-			oled_write_P(PSTR("9\n"), false);
-			break;
-		case _TEN:
-			oled_write_P(PSTR("10\n"), false);
-			break;
-		case _ELEVEN:
-			oled_write_P(PSTR("11\n"), false);
-			break;
-		case _TWELVE:
-			oled_write_P(PSTR("12\n"), false);
-			break;
-		case _THIRTEEN:
-			oled_write_P(PSTR("13\n"), false);
-			break;
-		case _FOURTEEN:
-			oled_write_P(PSTR("14\n"), false);
-			break;
 		case _SYSTEM:
 			oled_write_P(PSTR("SYSTM"), false);
 			break;
 		default:
-			oled_write_ln_P(PSTR("Undef"), false);
+			oled_write_P(PSTR("Undef"), false);
 	}
 	
 	oled_write_ln_P(PSTR("\n"), false);
 	
-	if (debug_config.enable)
+	if (debug_config.enable) {
 		oled_write_ln_P(PSTR("DEBUG"), false);
-	else
+	} else {
 		oled_write_ln_P(PSTR("\n"), false);
+	}
 	
-	if (keymap_config.nkro)
+	if (keymap_config.nkro) {
 		oled_write_ln_P(PSTR("NKRO\n"), false);
-	else
+	} else {
 		oled_write_ln_P(PSTR("6KRO\n"), false);
+	}
 
 	led_t led_usb_state = host_keyboard_led_state();
 	oled_write_P(PSTR("CPSLK"), led_usb_state.caps_lock);

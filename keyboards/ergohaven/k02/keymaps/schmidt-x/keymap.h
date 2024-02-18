@@ -10,16 +10,12 @@ enum custom_keycodes {
 	  Sends KC_F13 if layer is already default. */
 	NORMAL = SAFE_RANGE, // 0x7e40,
 	
-	/*
-	* layer_move(_INSERT) when pressed */
-	INSERT,
-	
 	/* 
 	* Reversed MO(_INSERT) */
 	INS_RMO,
 	
 	/*
-	* layer_on(_MOUSE) when pressed (doesn't bring back) */
+	* layer_on(_MOUSE) when pressed (doesn't bring back on release) */
 	MOUSE,
 	
 	/*
@@ -27,24 +23,30 @@ enum custom_keycodes {
 	SMB_NRM,
 	
 	/*
-	* Alt+Tab when pressed.
-	* F when pressed if any mod is on */
-	F_ALTAB,
+	* RAlt+Tab when pressed.
+	* T when pressed if any mod is on */
+	T_ALTAB,
 	
 	/*
-	* Ctrl+z when pressed.
-	* Z when pressed if any mod is on */
-	Z_UNDO,
+	* RCtrl+z when pressed.
+	* Q when pressed if any mod is on */
+	Q_UNDO,
 	
 	/*
-	* Ctrl+y when pressed.
-	* X when pressed if any mod is on */
-	X_REDO,
+	* RCtrl+y when pressed.
+	* J when pressed if any mod is on */
+	J_REDO,
+	
+	/*
+	* RCtrl+s when pressed.
+	* S when pressed if any mod is on */
+	S_SAVE,
+	
+	/*
+	* RGui+v when pressed.
+	* D when pressed if any mod is on */
+	D_CLIPB,
 };
-
-// QK_RBT   0x7c01
-// EE_CLR   0x7c03
-// KO_TOGG  0x7c5d
 
 enum layers {
 	_NORMAL,
@@ -52,16 +54,6 @@ enum layers {
 	_SYMBOL,
 	_U_SYMB,
 	_MOUSE,
-	_FIVE,
-	_SIX,
-	_SEVEN,
-	_EIGHT,
-	_NINE,
-	_TEN,
-	_ELEVEN,
-	_TWELVE,
-	_THIRTEEN,
-	_FOURTEEN,
 	_SYSTEM
 };
 
@@ -70,6 +62,7 @@ enum layers {
 #define U_SYMBL MO(_U_SYMB)
 #define OSM_LSF OSM(MOD_LSFT)
 #define OSM_LCT OSM(MOD_LCTL)
+#define INSERT  TO(_INSERT)
 
 
 // --- Right Shifted Symbols ---
