@@ -5,8 +5,6 @@ CAPS_WORD_ENABLE = yes
 LEADER_HRM_ENABLE = yes
 CONSOLE_ENABLE = yes
 
-SRC += helper.c
-
 ifeq ($(strip $(OLED_ENABLE)), yes)
   SRC += font_block.c
 endif
