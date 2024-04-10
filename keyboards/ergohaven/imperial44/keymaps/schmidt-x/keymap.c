@@ -5,22 +5,29 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NORMAL] = LAYOUT(
 		KC_ESC,  KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,
-		KC_LSFT, KC_C,    KC_R,    S_SAVE,  T_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT,
+		KC_LSFT, KC_C,    R_SELCT, S_SAVE,  T_ALTAB, KC_G,                          KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,  KC_LSFT,
 		KC_LCTL, Q_UNDO,  J_REDO,  KC_V,    D_CLIPB, KC_K,    KC_F23,      KC_F24,  KC_X,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, KC_LCTL,
 		                                    INSERT,  NORMAL,  KC_SPC,      KC_ENT,  SYMBOL,  MOUSE
 	),
 
 	[_INSERT] = LAYOUT( // Canary (mod)
-		_______, KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_Z,    KC_F,    KC_O,    KC_U,    KC_SCLN, _______,
+		KC_ESC,  KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_Z,    KC_F,    KC_O,    KC_U,    KC_SCLN, KC_TAB,
 		OSM_LSF, KC_C,    KC_R,    KC_S,    KC_T,    KC_G,                          KC_M,    KC_N,    KC_E,    KC_I,    KC_A,    OSM_LSF,
 		OSM_LCT, KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,    _______,     _______, KC_X,    KC_H,    KC_COMM, KC_DOT,  KC_QUOT, OSM_LCT,
 		                                    INS_RMO, _______, _______,     _______, _______, _______
 	),
 
+	[_SELECT] = LAYOUT(
+		KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       SL_PGUP, SL_HOME, SL_UP,   SL_END,  SL_PGDN, KC_TAB,
+		KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, T_ALTAB, XXXXXXX,                       KC_BSPC, SL_LEFT, SL_DOWN, SL_RGHT, KC_DEL,  KC_LSFT,
+		KC_LCTL, Q_UNDO,  J_CUT,   V_COPY,  D_PASTE, XXXXXXX, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LCTL,
+		                                    INSERT,  _______, _______,     _______, _______, _______
+	),
+
 	[_SYMBOL] = LAYOUT(
 		KC_CAPS, KC_GRV,  CK_AT,   CK_LCBR, CK_RCBR, CK_PIPE,                       CK_ASTR, KC_1,    KC_2,    KC_3,    CK_PLUS, KC_PSCR,
 		KC_LSFT, CK_UNDS, KC_EQL,  CK_LPRN, CK_RPRN, CK_AMPR,                       KC_0,    KC_4,    KC_5,    KC_6,    KC_MINS, KC_LSFT,
-		OSM_LCT, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH, _______,     _______, KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, OSM_LCT,
+		OSM_LCT, CK_EXLM, CK_HASH, KC_LBRC, KC_RBRC, KC_SLSH, XXXXXXX,     XXXXXXX, KC_BSLS, KC_7,    KC_8,    KC_9,    CK_QUES, OSM_LCT,
 		                                    SMB_NRM, U_SYMBL, _______,     XXXXXXX, XXXXXXX, XXXXXXX
 	),
 
@@ -32,15 +39,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 
 	[_MOUSE] = LAYOUT(
-		XXXXXXX, XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,
-		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX,
-		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0,
+		KC_ESC,  XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,
+		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, KC_LSFT,
+		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0,
 		                                    INSERT,  NORMAL,  KC_BTN1,     KC_BTN2, KC_BTN3, XXXXXXX
 	),
 
 	[_SYSTEM] = LAYOUT(
 		XXXXXXX, XXXXXXX, KO_TOGG, XXXXXXX, XXXXXXX, KC_SLEP,                       KC_PWR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-		XXXXXXX, EE_CLR,  NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+		XXXXXXX, EE_CLR,  NK_TOGG, AHK_TG,  XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 		QK_BOOT, QK_RBT,  DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 		                                    XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX
 	),
@@ -141,6 +148,75 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 		}
 
+		case J_CUT: {
+			static bool is_cut;
+			
+			if (record->event.pressed) {
+				if (no_mods()) {
+					add_oneshot_mods(MOD_BIT_RCTRL);
+					register_code(KC_X);
+					is_cut = true;
+				} else {
+					register_code(KC_J);
+				}
+			} else {
+				if (is_cut) {
+					unregister_code(KC_X);
+					is_cut = false;
+				} else {
+					unregister_code(KC_J);
+				}
+			}
+			
+			return false;
+		}
+		
+		case V_COPY: {
+			static bool is_copy;
+			
+			if (record->event.pressed) {
+				if (no_mods()) {
+					add_oneshot_mods(MOD_BIT_RCTRL);
+					register_code(KC_C);
+					is_copy = true;
+				} else {
+					register_code(KC_V);
+				}
+			} else {
+				if (is_copy) {
+					unregister_code(KC_C);
+					is_copy = false;
+				} else {
+					unregister_code(KC_V);
+				}
+			}
+			
+			return false;
+		}
+		
+		case D_PASTE: {
+			static bool is_paste;
+			
+			if (record->event.pressed) {
+				if (no_mods()) {
+					add_oneshot_mods(MOD_BIT_RCTRL);
+					register_code(KC_V);
+					is_paste = true;
+				} else {
+					register_code(KC_D);
+				}
+			} else {
+				if (is_paste) {
+					unregister_code(KC_V);
+					is_paste = false;
+				} else {
+					unregister_code(KC_D);
+				}
+			}
+			
+			return false;
+		}
+
 		case T_ALTAB: {
 			static bool is_alt_tab;
 			
@@ -164,19 +240,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			return false;
 		}
 		
-		case NORMAL: {
-			if (!record->event.pressed) {
-				return false;
-			}
-
-			if (layer_is_default()) {
-				tap_code(KC_F13);
-			} else {
+		case NORMAL:
+			if (record->event.pressed) {
 				layer_clear();
 			}
-			
 			return false;
-		}
 		
 		case INS_RMO:
 			if (record->event.pressed) {
@@ -194,27 +262,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		
 		case SMB_NRM: {
 			static bool should;
-			static layer_state_t mask = (1 << _INSERT) | (1 << _SYMBOL);
+			layer_state_t layer_mask = (1 << _INSERT) | (1 << _SYMBOL);
 			
 			if (record->event.pressed) {
-				if (layer_state != mask)
+				if (layer_state != layer_mask) {
 					return false;
+				}
 				
 				layer_clear();
 				should = true;
 			} else {
-				if (!should)
+				if (!should) {
 					return false;
+				}
 				
-				if (matrix_is_on(7, 2))
-					layer_state_set(mask);
-				else
+				if (matrix_is_on(7, 2)) {
+					layer_state_set(layer_mask);
+				} else {
 					layer_on(_INSERT);
+				}
 				
 				should = false;
 			}
 			return false;
 		}
+
+		case R_SELCT: {
+			static bool is_select;
+		
+			if (record->event.pressed) {
+				if (no_mods()) {
+					layer_on(_SELECT);
+					is_select = true;
+				} else {
+					register_code(KC_R);
+				}
+			} else {
+				if (is_select) {
+					is_select = false;
+				} else {
+					unregister_code(KC_R);
+				}
+			}
+			
+			return false;
+		}
+		
+		case AHK_TG:
+			if (record->event.pressed) {
+				ahk_enabled = !ahk_enabled;
+			}
+			return false;
 
 		case KC_ESC:
 			if (!record->event.pressed) {
@@ -237,7 +335,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // callback on layer change
 layer_state_t layer_state_set_user(layer_state_t state) {
 	clear_oneshot_mods();
-
+	
+	if (!ahk_enabled) {
+		return state;
+	}
+	
 	switch (get_highest_layer(state)) {
 		case _NORMAL:
 			tap_code(KC_F13); // turn on Normal mode in AHK
@@ -245,6 +347,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 		case _INSERT:
 			tap_code(KC_F14); // turn on Insert mode in AHK
+			break;
+			
+		case _SELECT:
+			tap_code(KC_F17); // turn on Select mode in AHK
 			break;
 		
 		case _SYMBOL:
@@ -322,6 +428,9 @@ void render_layer_state(void) {
 			break;
 		case _INSERT:
 			oled_write_P(PSTR("INSRT"), false);
+			break;
+		case _SELECT:
+			oled_write_P(PSTR("SELCT"), false);
 			break;
 		case _SYMBOL:
 			oled_write_P(PSTR("SYMB\n"), false);

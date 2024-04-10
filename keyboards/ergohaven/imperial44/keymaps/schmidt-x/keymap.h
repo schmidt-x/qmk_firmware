@@ -4,10 +4,12 @@
 #    include "leader_hrm.h"
 #endif
 
+// Determines whether to send F* keys on layer_state_set() to switch mode in AHK
+static bool ahk_enabled = true;
+
 enum custom_keycodes {
 	/*
-	* layer_clear() when pressed.
-	  Sends KC_F13 if layer is already default. */
+	* layer_clear() when pressed. */
 	NORMAL = SAFE_RANGE, // 0x7e40,
 	
 	/* 
@@ -28,29 +30,54 @@ enum custom_keycodes {
 	T_ALTAB,
 	
 	/*
-	* RCtrl+z when pressed.
+	* Undo when pressed (RCtrl+Z)
 	* Q when pressed if any mod is on */
 	Q_UNDO,
 	
 	/*
-	* RCtrl+y when pressed.
+	* Redo when pressed (RCtrl+Y)
 	* J when pressed if any mod is on */
 	J_REDO,
 	
 	/*
-	* RCtrl+s when pressed.
+	* Save when pressed (RCtrl+S)
 	* S when pressed if any mod is on */
 	S_SAVE,
 	
 	/*
-	* RGui+v when pressed.
+	* Clipboard when pressed (RGui+V)
 	* D when pressed if any mod is on */
 	D_CLIPB,
+	
+	/*
+	* Cut when pressed (RCtrl+X)
+	* J when pressed if any mod is on */
+	J_CUT,
+	
+	/*
+	* Copy when pressed (RCtrl+C)
+	* V when pressed if any mod is on */
+	V_COPY,
+	
+	/*
+	* Paste when pressed (RCtrl+V)
+	* D when pressed if any mod is on */
+	D_PASTE,
+	
+	/*
+	* layer_on(_SELECT) when pressed.
+	* R when pressed if any mod is on */
+	R_SELCT,
+	
+	/*
+	* Toggles global field 'bool ahk_enabled' */
+	AHK_TG,
 };
 
 enum layers {
 	_NORMAL,
 	_INSERT,
+	_SELECT,
 	_SYMBOL,
 	_U_SYMB,
 	_MOUSE,
@@ -65,7 +92,25 @@ enum layers {
 #define INSERT  TO(_INSERT)
 
 
-// --- Right Shifted Symbols ---
+// Right-Shifted Mod-Aliases
+
+#define RS(kc) RSFT(kc)
+#define RC(kc) RCTL(kc)
+
+
+// Right-Shifted Selects
+
+#define SL_UP   RSFT(KC_UP)
+#define SL_DOWN RSFT(KC_DOWN)
+#define SL_LEFT RSFT(KC_LEFT)
+#define SL_RGHT RSFT(KC_RGHT)
+#define SL_HOME RSFT(KC_HOME)
+#define SL_END  RSFT(KC_END)
+#define SL_PGDN RSFT(KC_PGDN)
+#define SL_PGUP RSFT(KC_PGUP)
+
+
+// Right-Shifted Symbols
 
 #define CK_TILD RSFT(KC_GRV)
 #define CK_EXLM RSFT(KC_1)
@@ -127,13 +172,18 @@ combo_t key_combos[] = {
 const key_override_t **key_overrides = (const key_override_t *[]) {
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_BSPC, C(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_BSPC, S(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LCTRL),
-	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_DEL,  C(KC_DEL),  1 << _NORMAL, ~MOD_BIT_LSHIFT),
-	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_DEL,  S(KC_DEL),  1 << _NORMAL, ~MOD_BIT_LCTRL),
+	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_DEL,  C(KC_DEL), (1 << _NORMAL) | (1 << _SELECT), ~MOD_BIT_LSHIFT),
+	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_DEL,  S(KC_DEL), (1 << _NORMAL) | (1 << _SELECT), ~MOD_BIT_LCTRL),
 	
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_LEFT, C(KC_LEFT), 1 << _NORMAL, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_LEFT, S(KC_LEFT), 1 << _NORMAL, ~MOD_BIT_LCTRL),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_RGHT, C(KC_RGHT), 1 << _NORMAL, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_RGHT, S(KC_RGHT), 1 << _NORMAL, ~MOD_BIT_LCTRL),
+	
+	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, SL_LEFT, RS(RC(KC_LEFT)), 1 << _SELECT, ~MOD_BIT_LSHIFT),
+	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, SL_RGHT, RS(RC(KC_RGHT)), 1 << _SELECT, ~MOD_BIT_LSHIFT),
+	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  SL_PGDN, RS(RC(KC_END)),  1 << _SELECT, ~MOD_BIT_LCTRL),
+	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  SL_PGUP, RS(RC(KC_HOME)), 1 << _SELECT, ~MOD_BIT_LCTRL),
 	
 	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_U, KC_WH_U),
 	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_D, KC_WH_D),
