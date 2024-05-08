@@ -2,6 +2,12 @@
 #include "keymap.h"
 #include "helper.h"
 
+#ifdef RAW_ENABLE
+#    include "raw_hid.h"
+#    include "hid.h"
+#endif
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NORMAL] = LAYOUT(
 		KC_ESC,  KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,                          KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_PGDN, KC_TAB,
@@ -52,6 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                                    XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX
 	),
 };
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -332,6 +339,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+#ifdef RAW_ENABLE
+
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+	uint8_t id = data[0];
+	
+	switch (id) {
+		case HID_AHK:
+			hid_handle_ahk(data[1], &ahk_enabled);
+			return;
+			
+		case HID_PING: {
+			hid_handle_ping(length);
+			return;
+		}
+		
+		default:
+			return;
+	}
+}
+
+#endif
+
+
 // callback on layer change
 layer_state_t layer_state_set_user(layer_state_t state) {
 	clear_oneshot_mods();
@@ -377,6 +407,7 @@ bool caps_word_press_user(uint16_t keycode) {
 		case KC_1 ... KC_0:
 		case KC_BSPC:
 		case KC_DEL:
+		case KC_MINS:
 		case CK_UNDS: // right shifted
 			return true;
 		
@@ -395,6 +426,7 @@ bool caps_word_press_user(uint16_t keycode) {
 // }
 
 #endif
+
 
 // void matrix_scan_user(void) { // The very important timer.
 	
@@ -419,8 +451,6 @@ void render_layer_state(void) {
 	} else {
 		oled_write_ln_P(PSTR("Win\n\n"), false);
 	}
-
-	oled_write_ln_P(PSTR("MODE\n"), false);
 
 	switch (get_highest_layer(layer_state)) {
 		case _NORMAL:
@@ -448,7 +478,15 @@ void render_layer_state(void) {
 			oled_write_P(PSTR("Undef"), false);
 	}
 	
-	oled_write_ln_P(PSTR("\n"), false);
+	if (ahk_enabled) {
+		oled_write_ln_P(PSTR("\nAHK\n"), false);
+	} else {
+		oled_write_ln_P(PSTR("\n\n"), false);
+	}
+	
+	if (!debug_config.enable) {
+		oled_write_P(PSTR("\n"), false);
+	}
 	
 	if (keymap_config.nkro) {
 		oled_write_ln_P(PSTR("NKRO\n"), false);

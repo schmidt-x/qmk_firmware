@@ -4,8 +4,10 @@
 #    include "leader_hrm.h"
 #endif
 
-// Determines whether to send F* keys on layer_state_set() to switch mode in AHK
-static bool ahk_enabled = true;
+
+// Determines whether to send F* keys on layer_state_set() to switch the mode in AHK
+static bool ahk_enabled = false;
+
 
 enum custom_keycodes {
 	/*
@@ -73,6 +75,7 @@ enum custom_keycodes {
 	* Toggles global field 'bool ahk_enabled' */
 	AHK_TG,
 };
+
 
 enum layers {
 	_NORMAL,
