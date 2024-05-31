@@ -444,7 +444,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 void render_layer_state(void) {
-	oled_write_ln_P(PSTR("i44\n"), false);
+	oled_write_ln_P(PSTR("\ni44\n"), false);
 
 	if (keymap_config.swap_lctl_lgui) {
 		oled_write_ln_P(PSTR("Mac\n\n"), false);
