@@ -14,7 +14,14 @@ void hid_handle_ahk(uint8_t arg, bool *ahk_enabled) {
 	}
 }
 
-void hid_handle_ping(uint8_t length) {
+void hid_handle_ping(uint8_t* data, uint8_t length) {
+	uint8_t hours   = data[1];
+	uint8_t minutes = data[2];
+	uint8_t seconds = data[3];
+	bool is_pm = (bool)data[4];
+	
+	printf("hid_ping at: %02d:%02d:%02d %s\n", hours, minutes, seconds, is_pm ? "PM" : "AM");
+	
 	uint8_t response[length];
 	memset(response, 0, length);
 	

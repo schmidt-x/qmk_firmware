@@ -350,7 +350,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 			return;
 			
 		case HID_PING: {
-			hid_handle_ping(length);
+			hid_handle_ping(data, length);
 			return;
 		}
 		
