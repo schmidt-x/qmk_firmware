@@ -8,6 +8,6 @@ enum raw_hid {
 	RESERVED,
 	HID_AHK,
 	
-	HID_PING = 255
+	HID_PING = 0xFF
 };
 

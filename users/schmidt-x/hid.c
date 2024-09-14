@@ -25,6 +25,6 @@ void hid_handle_ping(uint8_t* data, uint8_t length) {
 	uint8_t response[length];
 	memset(response, 0, length);
 	
-	response[0] = 255;
+	response[0] = HID_PING;
 	raw_hid_send(response, length);
 }

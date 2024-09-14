@@ -37,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                                    SMB_NRM, U_SYMBL, _______,     XXXXXXX, XXXXXXX, XXXXXXX
 	),
 
-	[_U_SYMB] = LAYOUT( // Do I really need this layer?
-		XXXXXXX, XXXXXXX, KC_F2,   XXXXXXX, XXXXXXX, KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  XXXXXXX, XXXXXXX, XXXXXXX,
+	[_U_SYMB] = LAYOUT(
+		XXXXXXX, XXXXXXX, KC_F2,   XXXXXXX, XXXXXXX, KC_F5,                         XXXXXXX, XXXXXXX, KC_INS,  KC_APP,  XXXXXXX, XXXXXXX,
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 		XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
 		                                    XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX
@@ -378,11 +378,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 		case _INSERT:
 			tap_code(KC_F14); // turn on Insert mode in AHK
 			break;
-			
+
 		case _SELECT:
 			tap_code(KC_F17); // turn on Select mode in AHK
 			break;
-		
+
 		case _SYMBOL:
 			tap_code(KC_F15); // turn on Symbol mode in AHK
 			break;
