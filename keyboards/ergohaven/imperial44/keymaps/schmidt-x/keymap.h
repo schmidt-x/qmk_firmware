@@ -192,8 +192,6 @@ const key_override_t *key_overrides[] = {
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, MS_DOWN, MS_WHLD, 1 << _MOUSE, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, MS_LEFT, MS_WHLL, 1 << _MOUSE, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, MS_RGHT, MS_WHLR, 1 << _MOUSE, ~MOD_BIT_LSHIFT),
-	
-	NULL // Null terminate the array of overrides!
 };
 
 #endif

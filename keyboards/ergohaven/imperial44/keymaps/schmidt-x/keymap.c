@@ -45,8 +45,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 
 	[_MOUSE] = LAYOUT(
-		KC_ESC,  XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, MS_UP,   XXXXXXX, XXXXXXX, XXXXXXX,
-		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, KC_LSFT,
+		KC_ESC,  MS_ACL2, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, MS_UP,   XXXXXXX, XXXXXXX, XXXXXXX,
+		KC_LSFT, MS_ACL0, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, KC_LSFT,
 		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0,
 		                                    INSERT,  NORMAL,  MS_BTN1,     MS_BTN2, MS_BTN3, XXXXXXX
 	),
@@ -359,6 +359,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 }
 
 #endif
+
+
+// void suspend_wakeup_init_user(void) {
+	// soft_reset_keyboard();
+// }
 
 
 // callback on layer change
