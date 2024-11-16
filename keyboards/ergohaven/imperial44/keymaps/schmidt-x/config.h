@@ -5,24 +5,13 @@
 
 #define OLED_TIMEOUT 10 * 1000 // 10 seconds
 
-#define MK_3_SPEED // Mouse Constant mode
-#define MK_MOMENTARY_ACCEL
+#define MOUSEKEY_INTERVAL   6
+#define MOUSEKEY_MAX_SPEED  2
+#define MOUSEKEY_MOVE_DELTA 4
 
-// Unmodified
-#define MK_C_OFFSET_UNMOD   8
-#define MK_C_INTERVAL_UNMOD 6
-
-// MS_ACL0
-#define MK_C_OFFSET_0   2
-#define MK_C_INTERVAL_0 6
-
-// MS_ACL1
-// #define MK_C_OFFSET_1   8
-// #define MK_C_INTERVAL_1 6
-
-// MS_ACL2
-#define MK_C_OFFSET_2   26
-#define MK_C_INTERVAL_2 6
+#define MOUSEKEY_WHEEL_TIME_TO_MAX 0 // disables acceleration
+#define MOUSEKEY_WHEEL_MAX_SPEED   1
+#define MOUSEKEY_WHEEL_INTERVAL    60
 
 // #define DEBUG_MATRIX_SCAN_RATE
 // #define SERIAL_DEBUG
