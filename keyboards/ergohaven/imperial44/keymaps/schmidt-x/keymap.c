@@ -72,156 +72,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case D_CLIPB: {
 			static bool is_clipboard;
-			
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_mods(MOD_BIT_RGUI);
-					register_code(KC_V);
-					is_clipboard = true;
-				} else {
-					register_code(KC_D);
-				}
-			} else {
-				if (is_clipboard) {
-					del_mods(MOD_BIT_RGUI);
-					unregister_code(KC_V);
-					is_clipboard = false;
-				} else {
-					unregister_code(KC_D);
-				}
-			}
-			
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_clipboard, MOD_BIT_RGUI, KC_V, KC_D);
 		}
 
 		case S_SAVE: {
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_oneshot_mods(MOD_BIT_RCTRL);
-				}
-				register_code(KC_S);
-			} else {
-				unregister_code(KC_S);
-			}
-
-			return false;
+			static bool is_save;
+			return handle_2key_macro(record->event.pressed, &is_save, MOD_BIT_RCTRL, KC_S, KC_S);
 		}
 
 		case Q_UNDO: {
 			static bool is_undo;
-
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_mods(MOD_BIT_RCTRL);
-					register_code(KC_Z);
-					is_undo = true;
-				} else {
-					register_code(KC_Q);
-				}
-			} else {
-				if (is_undo) {
-					del_mods(MOD_BIT_RCTRL);
-					unregister_code(KC_Z);
-					is_undo = false;
-				} else {
-					unregister_code(KC_Q);
-				}
-			}
-
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_undo, MOD_BIT_RCTRL, KC_Z, KC_Q);
 		}
 		
 		case J_REDO: {
 			static bool is_redo;
-
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_mods(MOD_BIT_RCTRL);
-					register_code(KC_Y);
-					is_redo = true;
-				} else {
-					register_code(KC_J);
-				}
-			} else {
-				if (is_redo) {
-					del_mods(MOD_BIT_RCTRL);
-					unregister_code(KC_Y);
-					is_redo = false;
-				} else {
-					unregister_code(KC_J);
-				}
-			}
-
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_redo, MOD_BIT_RCTRL, KC_Y, KC_J);
 		}
 
 		case J_CUT: {
 			static bool is_cut;
-			
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_oneshot_mods(MOD_BIT_RCTRL);
-					register_code(KC_X);
-					is_cut = true;
-				} else {
-					register_code(KC_J);
-				}
-			} else {
-				if (is_cut) {
-					unregister_code(KC_X);
-					is_cut = false;
-				} else {
-					unregister_code(KC_J);
-				}
-			}
-			
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_cut, MOD_BIT_RCTRL, KC_X, KC_J);
 		}
 		
 		case V_COPY: {
 			static bool is_copy;
-			
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_oneshot_mods(MOD_BIT_RCTRL);
-					register_code(KC_C);
-					is_copy = true;
-				} else {
-					register_code(KC_V);
-				}
-			} else {
-				if (is_copy) {
-					unregister_code(KC_C);
-					is_copy = false;
-				} else {
-					unregister_code(KC_V);
-				}
-			}
-			
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_copy, MOD_BIT_RCTRL, KC_C, KC_V);
 		}
 		
 		case D_PASTE: {
 			static bool is_paste;
-			
-			if (record->event.pressed) {
-				if (no_mods()) {
-					add_oneshot_mods(MOD_BIT_RCTRL);
-					register_code(KC_V);
-					is_paste = true;
-				} else {
-					register_code(KC_D);
-				}
-			} else {
-				if (is_paste) {
-					unregister_code(KC_V);
-					is_paste = false;
-				} else {
-					unregister_code(KC_D);
-				}
-			}
-			
-			return false;
+			return handle_2key_macro(record->event.pressed, &is_paste, MOD_BIT_RCTRL, KC_V, KC_D);
 		}
 
 		case T_ALTAB: {
