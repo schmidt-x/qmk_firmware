@@ -74,6 +74,10 @@ enum custom_keycodes {
 	/*
 	* Toggles global field 'bool ahk_enabled' */
 	AHK_TG,
+	
+	/*
+	* Temporarily increases mk_move_delta by 16 while held, restores original speed on release */
+	ACCEL
 };
 
 

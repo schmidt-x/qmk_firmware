@@ -45,8 +45,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 
 	[_MOUSE] = LAYOUT(
-		KC_ESC,  XXXXXXX, KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, MS_UP,   XXXXXXX, XXXXXXX, XXXXXXX,
-		KC_LSFT, XXXXXXX, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, KC_LSFT,
+		KC_ESC,  ACCEL,   KC_F3,   KC_F4,   KC_F5,   KC_VOLU,                       XXXXXXX, XXXXXXX, MS_UP,   XXXXXXX, XXXXXXX, XXXXXXX,
+		KC_LSFT, MS_ACL0, KC_F6,   KC_F7,   KC_F8,   KC_VOLD,                       XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, KC_LSFT,
 		XXXXXXX, KC_MSTP, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_P0,
 		                                    INSERT,  NORMAL,  MS_BTN1,     MS_BTN2, MS_BTN3, XXXXXXX
 	),
@@ -69,6 +69,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 	
 	switch (keycode) { // This will do most of the grunt work with the keycodes.
+
+		case ACCEL:
+			mk_move_delta += record->event.pressed ? 16 : -16;
+			return false;
 
 		case D_CLIPB: {
 			static bool is_clipboard;
