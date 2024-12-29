@@ -191,6 +191,7 @@ extern "C" {
 extern uint8_t mk_delay;
 extern uint8_t mk_interval;
 extern uint8_t mk_max_speed;
+extern uint8_t mk_move_delta;
 extern uint8_t mk_time_to_max;
 extern uint8_t mk_wheel_max_speed;
 extern uint8_t mk_wheel_time_to_max;

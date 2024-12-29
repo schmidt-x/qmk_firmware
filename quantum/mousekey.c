@@ -70,6 +70,8 @@ uint8_t mk_delay = MOUSEKEY_DELAY / 10;
 uint8_t mk_interval = MOUSEKEY_INTERVAL;
 /* steady speed (in action_delta units) applied each event (0-255) */
 uint8_t mk_max_speed = MOUSEKEY_MAX_SPEED;
+/* step size (0-255) */
+uint8_t mk_move_delta = MOUSEKEY_MOVE_DELTA;
 /* number of events (count) accelerating to steady speed (0-255) */
 uint8_t mk_time_to_max = MOUSEKEY_TIME_TO_MAX;
 /* ramp used to reach maximum pointer speed (NOT SUPPORTED) */
@@ -95,17 +97,17 @@ uint8_t mk_wheel_time_to_max = MOUSEKEY_WHEEL_TIME_TO_MAX;
 static uint8_t move_unit(void) {
     uint16_t unit;
     if (mousekey_accel & (1 << 0)) {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed) / 4;
+        unit = (mk_move_delta * mk_max_speed) / 4;
     } else if (mousekey_accel & (1 << 1)) {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed) / 2;
+        unit = (mk_move_delta * mk_max_speed) / 2;
     } else if (mousekey_accel & (1 << 2)) {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed);
+        unit = (mk_move_delta * mk_max_speed);
     } else if (mousekey_repeat == 0) {
-        unit = MOUSEKEY_MOVE_DELTA;
+        unit = mk_move_delta;
     } else if (mousekey_repeat >= mk_time_to_max) {
-        unit = MOUSEKEY_MOVE_DELTA * mk_max_speed;
+        unit = mk_move_delta * mk_max_speed;
     } else {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed * mousekey_repeat) / mk_time_to_max;
+        unit = (mk_move_delta * mk_max_speed * mousekey_repeat) / mk_time_to_max;
     }
     return (unit > MOUSEKEY_MOVE_MAX ? MOUSEKEY_MOVE_MAX : (unit == 0 ? 1 : unit));
 }
@@ -127,7 +129,7 @@ static int8_t move_unit(uint8_t axis) {
 
     if (mousekey_frame < 2) { // first frame(s): initial keypress moves one pixel
         mousekey_frame = 1;
-        unit           = dir * MOUSEKEY_MOVE_DELTA;
+        unit           = dir * mk_move_delta;
     } else { // acceleration
         // linear acceleration (is here for reference, but doesn't feel as good during use)
         // unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed * inertia) / mk_time_to_max;
@@ -203,7 +205,7 @@ static uint8_t move_unit(void) {
         speed = mk_accelerated_speed;
     } else if (mousekey_repeat && mouse_timer) {
         const uint16_t time_elapsed = timer_elapsed(mouse_timer) / 50;
-        speed                       = mk_initial_speed + MOUSEKEY_MOVE_DELTA * time_elapsed + (MOUSEKEY_MOVE_DELTA * time_elapsed * time_elapsed) / 2;
+        speed                       = mk_initial_speed + mk_move_delta * time_elapsed + (mk_move_delta * time_elapsed * time_elapsed) / 2;
         if (speed > mk_base_speed) {
             speed = mk_base_speed;
         }
@@ -249,15 +251,15 @@ static uint8_t move_unit(void) {
     if (mousekey_accel & (1 << 0)) {
         unit = 1;
     } else if (mousekey_accel & (1 << 1)) {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed) / 2;
+        unit = (mk_move_delta * mk_max_speed) / 2;
     } else if (mousekey_accel & (1 << 2)) {
         unit = MOUSEKEY_MOVE_MAX;
     } else if (mousekey_repeat == 0) {
-        unit = MOUSEKEY_MOVE_DELTA;
+        unit = mk_move_delta;
     } else if (mousekey_repeat >= mk_time_to_max) {
-        unit = MOUSEKEY_MOVE_DELTA * mk_max_speed;
+        unit = mk_move_delta * mk_max_speed;
     } else {
-        unit = (MOUSEKEY_MOVE_DELTA * mk_max_speed * mousekey_repeat) / mk_time_to_max;
+        unit = (mk_move_delta * mk_max_speed * mousekey_repeat) / mk_time_to_max;
     }
     return (unit > MOUSEKEY_MOVE_MAX ? MOUSEKEY_MOVE_MAX : (unit == 0 ? 1 : unit));
 }
