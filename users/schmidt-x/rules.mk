@@ -3,8 +3,4 @@ ifeq ($(strip $(LEADER_HRM_ENABLE)), yes)
 	OPT_DEFS += -DLEADER_HRM_ENABLE
 endif
 
-ifeq ($(strip $(RAW_ENABLE)), yes)
-	SRC += hid.c
-endif
-
 SRC += helper.c

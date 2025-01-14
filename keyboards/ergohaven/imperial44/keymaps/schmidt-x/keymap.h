@@ -80,7 +80,6 @@ enum custom_keycodes {
 	ACCEL
 };
 
-
 enum layers {
 	_NORMAL,
 	_INSERT,
@@ -90,6 +89,18 @@ enum layers {
 	_MOUSE,
 	_SYSTEM
 };
+
+#ifdef RAW_ENABLE
+
+enum hid_constants {
+	RESERVED,
+	HID_AHK,
+	HID_SET_LAYER,
+	HID_DEFAULT = 0xFE,
+	HID_PING    = 0xFF
+};
+
+#endif
 
 
 #define SYMBOL  MO(_SYMBOL)

@@ -4,7 +4,6 @@
 
 #ifdef RAW_ENABLE
 #    include "raw_hid.h"
-#    include "hid.h"
 #endif
 
 
@@ -231,15 +230,33 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 	
 	switch (id) {
 		case HID_AHK:
-			hid_handle_ahk(data[1], &ahk_enabled);
+			ahk_enabled = (bool)data[1];
 			return;
 		
-		case HID_PING:
-			hid_handle_ping(data, length);
+		case HID_SET_LAYER:
+			layer_state_set((data[1] << 8) | data[2]);
 			return;
 		
-		default:
+		case HID_DEFAULT:
+			ahk_enabled = true;
+			layer_clear();
 			return;
+		
+		case HID_PING: {
+			uint8_t hours = data[1], minutes = data[2], seconds = data[3];
+			bool is_pm = (bool)data[4];
+			
+			printf("hid_ping at: %02d:%02d:%02d %s\n", hours, minutes, seconds, is_pm ? "PM" : "AM");
+
+			uint8_t response[length];
+			memset(response, 0, length);
+			response[0] = HID_PING;
+			
+			raw_hid_send(response, length);
+			return;
+		}
+		
+		default: return;
 	}
 }
 
