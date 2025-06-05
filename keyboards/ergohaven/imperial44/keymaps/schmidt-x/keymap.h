@@ -77,7 +77,9 @@ enum custom_keycodes {
 	
 	/*
 	* Temporarily increases mk_move_delta by 16 while held, restores original speed on release */
-	ACCEL
+	ACCEL,
+	
+	C_SELAL
 };
 
 enum layers {

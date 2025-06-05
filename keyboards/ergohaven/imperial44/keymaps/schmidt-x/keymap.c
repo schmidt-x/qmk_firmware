@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_SELECT] = LAYOUT(
 		KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       SL_PGUP, SL_HOME, SL_UP,   SL_END,  SL_PGDN, KC_TAB,
-		KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, T_ALTAB, XXXXXXX,                       KC_BSPC, SL_LEFT, SL_DOWN, SL_RGHT, KC_DEL,  KC_LSFT,
+		KC_LSFT, C_SELAL, XXXXXXX, XXXXXXX, T_ALTAB, XXXXXXX,                       KC_BSPC, SL_LEFT, SL_DOWN, SL_RGHT, KC_DEL,  KC_LSFT,
 		KC_LCTL, Q_UNDO,  J_CUT,   V_COPY,  D_PASTE, XXXXXXX, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LCTL,
 		                                    INSERT,  _______, _______,     _______, _______, _______
 	),
@@ -73,6 +73,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			mk_move_delta += record->event.pressed ? 16 : -16;
 			return false;
 
+		case C_SELAL: {
+			static bool is_select_all;
+			return handle_2key_macro(record->event.pressed, &is_select_all, MOD_BIT_LCTRL, KC_A, KC_C);
+		}
+		
 		case D_CLIPB: {
 			static bool is_clipboard;
 			return handle_2key_macro(record->event.pressed, &is_clipboard, MOD_BIT_RGUI, KC_V, KC_D);
