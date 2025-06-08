@@ -124,7 +124,7 @@ combo_t key_combos[] = {
 #ifdef KEY_OVERRIDE_ENABLE
 
 // This globally defines all key overrides to be used
-const key_override_t **key_overrides = (const key_override_t *[]) {
+const key_override_t *key_overrides[] = {
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_BSPC, C(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LSHIFT),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LCTRL,  KC_BSPC, S(KC_BSPC), 1 << _NORMAL, ~MOD_BIT_LCTRL),
 	&ko_make_with_layers_and_negmods(MOD_BIT_LSHIFT, KC_DEL,  C(KC_DEL),  1 << _NORMAL, ~MOD_BIT_LSHIFT),
@@ -138,9 +138,7 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_U, KC_WH_U),
 	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_D, KC_WH_D),
 	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_L, KC_WH_L),
-	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_R, KC_WH_R),
-	
-	NULL // Null terminate the array of overrides!
+	&ko_make_basic(MOD_BIT_LSHIFT, KC_MS_R, KC_WH_R)
 };
 
 #endif

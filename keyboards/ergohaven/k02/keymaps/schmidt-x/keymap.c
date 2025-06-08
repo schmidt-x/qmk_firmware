@@ -269,6 +269,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 
+#ifdef CAPS_WORD_ENABLE
+
 // Caps Word
 bool caps_word_press_user(uint16_t keycode) {
 	switch (keycode) {
@@ -294,6 +296,8 @@ bool caps_word_press_user(uint16_t keycode) {
 	// else
 		
 // }
+
+#endif
 
 
 // void matrix_scan_user(void) { // The very important timer.

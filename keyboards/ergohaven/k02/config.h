@@ -1,8 +1,8 @@
 #pragma once
 
-#define BOOTMAGIC_LITE_ROW          1
+#define BOOTMAGIC_LITE_ROW          0
 #define BOOTMAGIC_LITE_COLUMN       0
-#define BOOTMAGIC_LITE_ROW_RIGHT    6
+#define BOOTMAGIC_LITE_ROW_RIGHT    5
 #define BOOTMAGIC_LITE_COLUMN_RIGHT 5
 
 /* Serial settings */
