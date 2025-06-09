@@ -1,0 +1,32 @@
+name: Compile Firmware
+
+on:
+  workflow_dispatch:
+  push:
+    branches: schmidt-x
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    container: qmkfm/qmk_cli
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: schmidt-x
+          submodules: recursive
+          path: qmk_firmware
+      
+      - name: Compile keymaps
+        working-directory: qmk_firmware
+        run: |
+          qmk compile -kb ergohaven/imperial44 -km schmidt-x
+          qmk compile -kb ergohaven/k02 -km schmidt-x
+      
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: qmk_firmware/*.uf2
+          if-no-files-found: error
